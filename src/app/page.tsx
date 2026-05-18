@@ -132,7 +132,7 @@ export default function LandingPage() {
         name: name,
         onboarded: false
       }));
-      router.push("/dashboard");
+      router.push("/onboarding");
     }, 1500);
   };
 
