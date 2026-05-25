@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ChatBubble } from "./ChatBubble";
 import { ChatInput } from "./ChatInput";
 import { Comfortaa } from "next/font/google";
+
 const comfortaa = Comfortaa({
   subsets: ["latin"],
   weight: ["700"],
@@ -11,7 +12,8 @@ const comfortaa = Comfortaa({
 
 type Message = {
   role: "user" | "bot";
-  text: string;
+  text?: string;
+  files?: File[];
 };
 
 export function ChatPage() {
@@ -19,8 +21,12 @@ export function ChatPage() {
     { role: "bot", text: "xx님 안녕하세요! 무엇을 도와드릴까요?" },
   ]);
 
-  const sendMessage = (text: string) => {
-    const userMsg = { role: "user" as const, text };
+  const sendMessage = (data: { text: string; files?: File[] }) => {
+    const userMsg: Message = {
+      role: "user",
+      text: data.text.trim() || undefined,
+      files: data.files,
+    };
 
     setMessages((prev) => [...prev, userMsg]);
 
@@ -29,25 +35,65 @@ export function ChatPage() {
     }, 800);
   };
 
+  const openFile = (file: File) => {
+    const url = URL.createObjectURL(file);
+    window.open(url);
+  };
+
   return (
     <div className="flex flex-col w-full min-h-screen bg-[#FAF8F5] items-center">
       <div className="flex flex-col w-full max-w-sm h-screen">
-        {/* 헤더 영역 */}
+        {/* 헤더 */}
         <div
           className={`flex items-center justify-center py-3 border-b border-gray-200 bg-[#FAF8F5] ${comfortaa.className}`}
         >
-          <h1 className="text-2xl font-bold text-[#FECA43] tracking-tight select-none">
-            Ducky
-          </h1>
+          <h1 className="text-2xl font-bold text-[#FECA43]">Ducky</h1>
         </div>
-        {/* 채팅 영역 */}
+
+        {/* 채팅 */}
         <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4">
           {messages.map((msg, i) => (
-            <ChatBubble key={i} role={msg.role} text={msg.text} />
+            <div
+              key={i}
+              className={`flex flex-col ${
+                msg.role === "user" ? "items-end" : "items-start"
+              } w-full`}
+            >
+              {/* 텍스트 */}
+              {msg.text && <ChatBubble role={msg.role} text={msg.text} />}
+
+              {/* ✅ 파일 카드 */}
+              {msg.files && msg.files.length > 0 && (
+                <div className="mt-1 flex flex-wrap gap-2 max-w-[70%]">
+                  {msg.files.map((file, idx) => {
+                    const isImage = file.type.startsWith("image/");
+
+                    return (
+                      <div
+                        key={idx}
+                        onClick={() => openFile(file)}
+                        className="cursor-pointer"
+                      >
+                        {isImage ? (
+                          <img
+                            src={URL.createObjectURL(file)}
+                            className="w-28 h-28 object-cover rounded-lg shadow"
+                          />
+                        ) : (
+                          <div className="bg-gray-200 px-3 py-2 rounded-lg text-xs">
+                            📄 {file.name}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           ))}
         </div>
 
-        {/* 입력창 (하단 고정) */}
+        {/* 입력창 */}
         <div className="sticky bottom-0">
           <ChatInput onSend={sendMessage} />
         </div>

@@ -23,7 +23,7 @@ export function ChatBubble({ role, text }: Props) {
 
       {/* 말풍선 */}
       <div
-        className={`max-w-[75%] px-4 py-3 rounded-2xl text-sm shadow-sm ${
+        className={`max-w-[75%] w-fit px-4 py-3 rounded-2xl text-sm shadow-sm ${
           isUser ? "bg-[#FECA43] text-white" : "bg-white text-gray-800"
         }`}
       >
