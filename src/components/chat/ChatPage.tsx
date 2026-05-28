@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ChatBubble } from "./ChatBubble";
 import { ChatInput } from "./ChatInput";
 import { Comfortaa } from "next/font/google";
@@ -39,6 +39,11 @@ export function ChatPage() {
     const url = URL.createObjectURL(file);
     window.open(url);
   };
+
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-[#FAF8F5] items-center">
@@ -91,6 +96,7 @@ export function ChatPage() {
               )}
             </div>
           ))}
+          <div ref={bottomRef} />
         </div>
 
         {/* 입력창 */}
