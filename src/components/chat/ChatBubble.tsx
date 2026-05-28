@@ -8,7 +8,7 @@ export function ChatBubble({ role, text }: Props) {
 
   return (
     <div
-      className={`flex items-end gap-2 ${
+      className={`flex items-end gap-2 w-full ${
         isUser ? "justify-end" : "justify-start"
       }`}
     >
@@ -23,9 +23,11 @@ export function ChatBubble({ role, text }: Props) {
 
       {/* 말풍선 */}
       <div
-        className={`max-w-[75%] w-fit px-4 py-3 rounded-2xl text-sm shadow-sm ${
-          isUser ? "bg-[#FECA43] text-white" : "bg-white text-gray-800"
-        }`}
+        className={`max-w-[75%]
+  px-4 py-3 rounded-2xl text-sm shadow-sm
+  break-keep break-words whitespace-pre-wrap leading-relaxed ${
+    isUser ? "bg-[#FECA43] text-white" : "bg-white text-gray-800"
+  }`}
       >
         {text}
       </div>

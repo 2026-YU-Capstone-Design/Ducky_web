@@ -62,7 +62,7 @@ export function ChatPage() {
               {/* 텍스트 */}
               {msg.text && <ChatBubble role={msg.role} text={msg.text} />}
 
-              {/* ✅ 파일 카드 */}
+              {/* 파일 카드 */}
               {msg.files && msg.files.length > 0 && (
                 <div className="mt-1 flex flex-wrap gap-2 max-w-[70%]">
                   {msg.files.map((file, idx) => {

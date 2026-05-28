@@ -60,7 +60,7 @@ export function ChatInput({
         </button>
       </div>
 
-      {/* ✅ 선택 파일 미리보기 */}
+      {/* 선택 파일 미리보기 */}
       {files.length > 0 && (
         <div className="flex gap-2 mb-2 flex-wrap">
           {files.map((file, i) => (
