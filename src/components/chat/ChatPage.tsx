@@ -65,12 +65,9 @@ export function ChatPage() {
                 msg.role === "user" ? "items-end" : "items-start"
               } w-full`}
             >
-              {/* 텍스트 */}
-              {msg.text && <ChatBubble role={msg.role} text={msg.text} />}
-
               {/* 파일 */}
               {msg.files && msg.files.length > 0 && (
-                <div className="mt-1 flex flex-wrap gap-2 max-w-[70%]">
+                <div className="mb-2 mr-1 flex flex-wrap gap-2 max-w-[70%]">
                   {msg.files.map((file, idx) => {
                     const isImage = file.type.startsWith("image/");
 
@@ -95,6 +92,9 @@ export function ChatPage() {
                   })}
                 </div>
               )}
+
+              {/* 텍스트 */}
+              {msg.text && <ChatBubble role={msg.role} text={msg.text} />}
             </div>
           ))}
 
