@@ -41,13 +41,14 @@ export function ChatPage() {
   };
 
   const bottomRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-[#FAF8F5] items-center">
-      <div className="flex flex-col w-full max-w-sm h-screen">
+      <div className="flex flex-col w-full max-w-sm h-screen relative">
         {/* 헤더 */}
         <div
           className={`flex items-center justify-center py-3 border-b border-gray-200 bg-[#FAF8F5] ${comfortaa.className}`}
@@ -56,7 +57,7 @@ export function ChatPage() {
         </div>
 
         {/* 채팅 */}
-        <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4">
+        <div className="flex-1 overflow-y-auto px-4 py-6 pb-44 space-y-4">
           {messages.map((msg, i) => (
             <div
               key={i}
@@ -67,7 +68,7 @@ export function ChatPage() {
               {/* 텍스트 */}
               {msg.text && <ChatBubble role={msg.role} text={msg.text} />}
 
-              {/* 파일 카드 */}
+              {/* 파일 */}
               {msg.files && msg.files.length > 0 && (
                 <div className="mt-1 flex flex-wrap gap-2 max-w-[70%]">
                   {msg.files.map((file, idx) => {
@@ -96,11 +97,12 @@ export function ChatPage() {
               )}
             </div>
           ))}
+
           <div ref={bottomRef} />
         </div>
 
         {/* 입력창 */}
-        <div className="sticky bottom-0">
+        <div className="absolute bottom-0 left-0 right-0">
           <ChatInput onSend={sendMessage} />
         </div>
       </div>
