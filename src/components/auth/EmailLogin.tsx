@@ -14,7 +14,7 @@ interface EmailLoginProps {
   /** 이메일 상태를 업데이트하는 함수 */
   setEmail: Dispatch<SetStateAction<string>>;
   /** 사용자가 입력한 비밀번호 */
-  password: "";
+  password: string;
   /** 비밀번호 상태를 업데이트하는 함수 */
   setPassword: Dispatch<SetStateAction<string>>;
   /** 로그인 에러 메시지 */
@@ -47,7 +47,7 @@ export function EmailLogin({
   setSignupStep,
 }: EmailLoginProps) {
   return (
-    <div className="w-full flex flex-col items-start space-y-8 animate-fade-in duration-300">
+    <div className="flex w-full flex-col items-start space-y-7 pt-0 animate-fade-in duration-300 sm:space-y-8 sm:pt-2">
       <button
         type="button"
         onClick={() => {
@@ -59,14 +59,14 @@ export function EmailLogin({
       >
         <ChevronLeft className="h-7 w-7 text-[#333333]" />
       </button>
-      <h2 className="text-3.5xl font-bold tracking-tight text-[#333333] select-none pt-2">
+      <h2 className="pt-2 text-3xl font-bold tracking-tight text-[#333333] break-keep select-none sm:text-4xl">
         이메일로 로그인
       </h2>
       <form onSubmit={handleEmailLoginSubmit} className="w-full space-y-4 pt-4">
         {error && (
-          <div className="flex items-center gap-2 p-3.5 text-sm text-red-600 bg-red-50 rounded-xl border border-red-100">
+          <div className="flex items-start gap-2 rounded-xl border border-red-100 bg-red-50 p-3.5 text-sm text-red-600">
             <AlertCircle className="h-4 w-4 shrink-0" />
-            <span>{error}</span>
+            <span className="min-w-0 break-words">{error}</span>
           </div>
         )}
         <Input
@@ -74,7 +74,7 @@ export function EmailLogin({
           placeholder="이메일 입력"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full h-13 px-4 rounded-xl bg-[#EFECE5] text-[#333333] placeholder-[#9E988E] border-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none text-base font-medium transition-all shadow-none"
+          className="h-auto min-h-13 w-full rounded-xl border-none bg-[#EFECE5] px-4 py-3 text-base font-medium text-[#333333] shadow-none transition-all placeholder-[#9E988E] focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
           required
         />
         <Input
@@ -82,14 +82,14 @@ export function EmailLogin({
           placeholder="비밀번호 입력"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full h-13 px-4 rounded-xl bg-[#EFECE5] text-[#333333] placeholder-[#9E988E] border-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none text-base font-medium transition-all shadow-none"
+          className="h-auto min-h-13 w-full rounded-xl border-none bg-[#EFECE5] px-4 py-3 text-base font-medium text-[#333333] shadow-none transition-all placeholder-[#9E988E] focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
           required
         />
         <div className="pt-2">
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full h-13 rounded-xl bg-[#FECA43] hover:bg-[#FECA43]/90 text-white font-bold text-base transition-transform active:scale-[0.99] flex items-center justify-center gap-2 shadow-none border-none"
+            className="h-auto min-h-13 w-full whitespace-normal rounded-xl border-none bg-[#FECA43] px-4 py-3 text-base font-bold leading-tight text-white shadow-none transition-transform hover:bg-[#FECA43]/90 active:scale-[0.99]"
           >
             {isLoading ? (
               <Loader2 className="h-5 w-5 animate-spin" />

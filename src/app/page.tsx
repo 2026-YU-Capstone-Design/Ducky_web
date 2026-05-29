@@ -32,7 +32,7 @@ export default function LandingPage() {
   const [error, setError] = useState("");
 
   // 사용자 로그인 상태 및 정보 영구 저장
-  const [_, setUser] = useLocalStorage("ducky_user", {
+  const [, setUser] = useLocalStorage("ducky_user", {
     id: "",
     name: "",
     level: "beginner" as "beginner" | "intermediate" | "advanced",
@@ -214,9 +214,9 @@ export default function LandingPage() {
   // 1단계: 순수 스플래시 화면 (선명한 옐로우 배경 #FECA43)
   if (phase === 1) {
     return (
-      <div className={`flex h-screen w-full flex-col items-center justify-center bg-[#FECA43] text-white ${comfortaa.className} transition-all duration-700`}>
+      <div className={`flex min-h-dvh w-full flex-col items-center justify-center bg-[#FECA43] px-6 text-white ${comfortaa.className} transition-all duration-700`}>
         <div className="flex flex-col items-center space-y-4">
-          <h1 className="text-6xl font-bold tracking-tight select-none">Ducky</h1>
+          <h1 className="text-[clamp(3rem,13vw,5rem)] font-bold tracking-tight select-none">Ducky</h1>
         </div>
       </div>
     );
@@ -225,9 +225,9 @@ export default function LandingPage() {
   // 2단계: 은은한 크림 베이지 배경 및 옐로우 로고 스플래시 (배경: #FAF8F5, 로고: #FECA43)
   if (phase === 2) {
     return (
-      <div className={`flex h-screen w-full flex-col items-center justify-center bg-[#FAF8F5] text-[#FECA43] ${comfortaa.className} transition-all duration-700`}>
+      <div className={`flex min-h-dvh w-full flex-col items-center justify-center bg-[#FAF8F5] px-6 text-[#FECA43] ${comfortaa.className} transition-all duration-700`}>
         <div className="flex flex-col items-center space-y-2">
-          <h1 className="text-6xl font-bold tracking-tight select-none">Ducky</h1>
+          <h1 className="text-[clamp(3rem,13vw,5rem)] font-bold tracking-tight select-none">Ducky</h1>
         </div>
       </div>
     );
@@ -235,12 +235,14 @@ export default function LandingPage() {
 
   // 3단계: 메인 로그인 화면
   return (
-    <div className={`flex min-h-screen w-full flex-col bg-[#FAF8F5] font-sans transition-all duration-500 ${
+    <div className={`flex min-h-dvh w-full flex-col overflow-y-auto bg-[#FAF8F5] px-4 py-6 font-sans transition-all duration-500 sm:px-6 lg:px-10 ${
       emailMode === "options"
-        ? "items-center justify-center p-6"
-        : "items-center justify-start pt-14 pb-8 px-6 md:justify-center md:pt-6"
+        ? "items-center justify-center"
+        : "items-center justify-start sm:justify-center"
     }`}>
-      <div className="w-full max-w-sm animate-fade-in duration-500 relative flex flex-col h-full min-h-[400px]">
+      <div className={`relative flex w-full flex-col animate-fade-in duration-500 ${
+        emailMode === "options" ? "max-w-5xl" : "min-h-[calc(100dvh-3rem)] max-w-md sm:min-h-[520px] sm:max-w-lg"
+      }`}>
         
         {/* Render Terms Modal overlay */}
         <TermsModal showTerms={showTerms} setShowTerms={setShowTerms} />
@@ -261,7 +263,7 @@ export default function LandingPage() {
           <EmailLogin
             email={email}
             setEmail={setEmail}
-            password={password as ""}
+            password={password}
             setPassword={setPassword}
             error={error}
             isLoading={isLoading}
@@ -298,7 +300,7 @@ export default function LandingPage() {
             )}
             {signupStep === 3 && (
               <SignupStep3
-                password={password as ""}
+                password={password}
                 passwordError={passwordError}
                 passwordConfirm={passwordConfirm}
                 passwordConfirmError={passwordConfirmError}

@@ -3,6 +3,31 @@
 import { useState } from "react";
 import { Mic, SendHorizontal, Plus, X } from "lucide-react";
 
+type BrowserSpeechRecognitionEvent = {
+  results: {
+    [index: number]: {
+      [index: number]: {
+        transcript: string;
+      };
+    };
+  };
+};
+
+type BrowserSpeechRecognition = {
+  lang: string;
+  onresult: ((event: BrowserSpeechRecognitionEvent) => void) | null;
+  start: () => void;
+};
+
+type BrowserSpeechRecognitionConstructor = new () => BrowserSpeechRecognition;
+
+declare global {
+  interface Window {
+    SpeechRecognition?: BrowserSpeechRecognitionConstructor;
+    webkitSpeechRecognition?: BrowserSpeechRecognitionConstructor;
+  }
+}
+
 export function ChatInput({
   onSend,
 }: {
@@ -29,8 +54,7 @@ export function ChatInput({
 
   const startVoice = () => {
     const SpeechRecognition =
-      (window as any).SpeechRecognition ||
-      (window as any).webkitSpeechRecognition;
+      window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
       alert("음성 인식 지원 안됨");
@@ -40,7 +64,7 @@ export function ChatInput({
     const recognition = new SpeechRecognition();
     recognition.lang = "ko-KR";
 
-    recognition.onresult = (e: any) => {
+    recognition.onresult = (e) => {
       const text = e.results[0][0].transcript;
       setInput(text);
     };
@@ -49,16 +73,16 @@ export function ChatInput({
   };
 
   return (
-    <div className="w-full bg-[#FAF8F5] border-t border-gray-200">
+    <div className="w-full border-t border-gray-200 bg-[#FAF8F5]">
       {/* 파일 미리보기 */}
       {files.length > 0 && (
-        <div className="flex gap-2 px-4 pt-3 flex-wrap">
+        <div className="flex flex-wrap gap-2 px-3 pt-3 sm:px-4 lg:px-6">
           {files.map((file, i) => (
             <div
               key={i}
-              className="flex items-center gap-1 bg-gray-200 text-xs px-2 py-1 rounded"
+              className="flex max-w-full items-center gap-1 rounded bg-gray-200 px-2 py-1 text-xs"
             >
-              <span className="max-w-[120px] truncate">{file.name}</span>
+              <span className="max-w-[9rem] truncate sm:max-w-[12rem]">{file.name}</span>
 
               <button onClick={() => removeFile(i)}>
                 <X className="w-3 h-3" />
@@ -69,12 +93,12 @@ export function ChatInput({
       )}
 
       {/* 입력창 */}
-      <div className="px-4 py-3">
-        <div className="flex items-center gap-3">
+      <div className="px-3 py-3 sm:px-4 lg:px-6">
+        <div className="flex items-center gap-2 sm:gap-3">
           {/* 텍스트 입력 영역 */}
-          <div className="flex flex-1 items-center bg-white rounded-full px-4 py-3 mb-1 shadow-sm">
+          <div className="mb-1 flex min-w-0 flex-1 items-center rounded-full bg-white px-3 py-3 shadow-sm sm:px-4">
             {/* 파일 버튼 */}
-            <label className="cursor-pointer text-gray-700 mr-2">
+            <label className="mr-2 shrink-0 cursor-pointer text-gray-700">
               <Plus className="w-5 h-5" />
 
               <input
@@ -96,7 +120,7 @@ export function ChatInput({
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="메시지를 입력하세요."
-              className="flex-1 outline-none text-sm bg-transparent"
+              className="min-w-0 flex-1 bg-transparent text-sm outline-none"
               onKeyDown={(e) => {
                 if (e.key === "Enter") send();
               }}
@@ -105,7 +129,7 @@ export function ChatInput({
             {/* 전송 버튼 */}
             <button
               onClick={send}
-              className="text-gray-700 cursor-pointer ml-2"
+              className="ml-2 shrink-0 cursor-pointer text-gray-700"
             >
               <SendHorizontal className="w-5 h-5" />
             </button>
@@ -115,7 +139,7 @@ export function ChatInput({
           <button
             onClick={startVoice}
             className="
-        w-11 h-11 rounded-full
+        h-10 w-10 rounded-full sm:h-11 sm:w-11
         bg-[#FECA43]
         flex items-center justify-center
         shrink-0

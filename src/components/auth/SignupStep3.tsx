@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
  */
 interface SignupStep3Props {
   /** 사용자가 입력한 비밀번호 */
-  password: "";
+  password: string;
   /** 비밀번호 관련 에러 메시지 */
   passwordError: string;
   /** 사용자가 입력한 비밀번호 확인 */
@@ -61,7 +61,7 @@ export function SignupStep3({
   setSignupStep,
 }: SignupStep3Props) {
   return (
-    <div className="w-full flex flex-col items-start space-y-8 animate-fade-in duration-300 pt-2">
+    <div className="flex w-full flex-col items-start space-y-7 pt-0 animate-fade-in duration-300 sm:space-y-8 sm:pt-2">
       <button
         type="button"
         onClick={() => setSignupStep(2)}
@@ -70,7 +70,7 @@ export function SignupStep3({
       >
         <ChevronLeft className="h-7 w-7 text-[#333333]" />
       </button>
-      <h2 className="text-3xl font-extrabold tracking-tight text-[#333333] select-none">
+      <h2 className="text-2xl font-extrabold tracking-tight text-[#333333] break-keep select-none sm:text-3xl">
         비밀번호를 입력해주세요
       </h2>
       <div className="w-full space-y-6 pt-2">
@@ -118,10 +118,10 @@ export function SignupStep3({
 
       {/* 약관 동의 체크박스 */}
       <div className="w-full space-y-3 pt-4 border-t border-zinc-100">
-        <div className="flex items-center justify-between group">
-          <label className="flex items-center gap-3 cursor-pointer">
+        <div className="flex items-start justify-between gap-3 group">
+          <label className="flex min-w-0 flex-1 cursor-pointer items-start gap-3">
             <div
-              className={`w-5 h-5 rounded flex items-center justify-center transition-colors border ${
+              className={`flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-colors ${
                 agreeTerms
                   ? "bg-[#FECA43] border-[#FECA43]"
                   : "border-zinc-300 bg-white group-hover:border-[#FECA43]/50"
@@ -137,23 +137,23 @@ export function SignupStep3({
               checked={agreeTerms}
               onChange={(e) => setAgreeTerms(e.target.checked)}
             />
-            <span className="text-sm font-bold text-zinc-700 select-none">
+            <span className="min-w-0 text-sm font-bold leading-snug text-zinc-700 break-keep select-none">
               [필수] 서비스 이용 약관
             </span>
           </label>
           <button
             type="button"
             onClick={() => setShowTerms("service")}
-            className="text-xs font-bold text-zinc-400 hover:text-zinc-600 underline underline-offset-2"
+            className="shrink-0 text-xs font-bold text-zinc-400 underline underline-offset-2 hover:text-zinc-600"
           >
             보기
           </button>
         </div>
 
-        <div className="flex items-center justify-between group">
-          <label className="flex items-center gap-3 cursor-pointer">
+        <div className="flex items-start justify-between gap-3 group">
+          <label className="flex min-w-0 flex-1 cursor-pointer items-start gap-3">
             <div
-              className={`w-5 h-5 rounded flex items-center justify-center transition-colors border ${
+              className={`flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-colors ${
                 agreeMarketing
                   ? "bg-[#FECA43] border-[#FECA43]"
                   : "border-zinc-300 bg-white group-hover:border-[#FECA43]/50"
@@ -169,14 +169,14 @@ export function SignupStep3({
               checked={agreeMarketing}
               onChange={(e) => setAgreeMarketing(e.target.checked)}
             />
-            <span className="text-sm font-bold text-zinc-700 select-none">
+            <span className="min-w-0 text-sm font-bold leading-snug text-zinc-700 break-keep select-none">
               [선택] 마케팅 및 메시지 수신 동의
             </span>
           </label>
           <button
             type="button"
             onClick={() => setShowTerms("marketing")}
-            className="text-xs font-bold text-zinc-400 hover:text-zinc-600 underline underline-offset-2"
+            className="shrink-0 text-xs font-bold text-zinc-400 underline underline-offset-2 hover:text-zinc-600"
           >
             보기
           </button>
@@ -194,7 +194,7 @@ export function SignupStep3({
             !agreeTerms ||
             isLoading
           }
-          className={`w-full h-14 rounded-xl font-bold text-base transition-all active:scale-[0.99] border-none shadow-none ${
+          className={`h-auto min-h-14 w-full whitespace-normal rounded-xl border-none px-4 py-3 text-base font-bold leading-tight shadow-none transition-all active:scale-[0.99] ${
             password &&
             !passwordError &&
             passwordConfirm &&

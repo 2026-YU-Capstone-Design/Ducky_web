@@ -8,7 +8,7 @@ export function ChatBubble({ role, text }: Props) {
 
   return (
     <div
-      className={`flex items-end gap-2 w-full ${
+      className={`flex w-full items-end gap-2 ${
         isUser ? "justify-end" : "justify-start"
       }`}
     >
@@ -16,12 +16,12 @@ export function ChatBubble({ role, text }: Props) {
         <img
           src="/images/splash7.png"
           alt="ducky"
-          className="w-8 h-8 rounded-full object-cover"
+          className="h-8 w-8 shrink-0 rounded-full object-cover"
         />
       )}
 
       <div
-        className={`max-w-[75%]
+        className={`max-w-[82%] sm:max-w-[72%] lg:max-w-[62%]
         px-4 py-3 rounded-2xl text-sm shadow-sm
         break-keep break-words whitespace-pre-wrap
         leading-relaxed ${

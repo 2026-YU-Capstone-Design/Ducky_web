@@ -47,17 +47,17 @@ export function ChatPage() {
   }, [messages]);
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-[#FAF8F5] items-center">
-      <div className="flex flex-col w-full max-w-sm h-screen relative">
+    <div className="flex min-h-dvh w-full flex-col items-center bg-[#FAF8F5] sm:px-4 lg:px-8">
+      <div className="relative flex h-dvh w-full max-w-full flex-col bg-[#FAF8F5] sm:my-4 sm:h-[calc(100dvh-2rem)] sm:max-w-2xl sm:overflow-hidden sm:rounded-lg sm:border sm:border-[#ECE7DC] sm:shadow-sm lg:max-w-4xl xl:max-w-5xl">
         {/* 헤더 */}
         <div
-          className={`flex items-center justify-center py-4 border-b border-[#ECE7DC] bg-[#FAF8F5] ${comfortaa.className}`}
+          className={`flex shrink-0 items-center justify-center border-b border-[#ECE7DC] bg-[#FAF8F5] px-4 py-4 ${comfortaa.className}`}
         >
           <h1 className="text-2xl font-bold text-[#FECA43]">Ducky</h1>
         </div>
 
         {/* 채팅 */}
-        <div className="flex-1 overflow-y-auto px-4 py-6 pb-24 space-y-4">
+        <div className="flex-1 space-y-4 overflow-y-auto px-3 py-5 pb-28 sm:px-5 sm:py-6 sm:pb-32 lg:px-8">
           {messages.map((msg, i) => (
             <div
               key={i}
@@ -67,7 +67,7 @@ export function ChatPage() {
             >
               {/* 파일 */}
               {msg.files && msg.files.length > 0 && (
-                <div className="mb-2 mr-1 flex flex-wrap gap-2 max-w-[70%]">
+                <div className="mb-2 mr-1 flex max-w-[min(20rem,82%)] flex-wrap gap-2 sm:max-w-[70%]">
                   {msg.files.map((file, idx) => {
                     const isImage = file.type.startsWith("image/");
 
@@ -80,10 +80,11 @@ export function ChatPage() {
                         {isImage ? (
                           <img
                             src={URL.createObjectURL(file)}
-                            className="w-28 h-28 object-cover rounded-lg shadow"
+                            alt={file.name}
+                            className="h-24 w-24 rounded-lg object-cover shadow sm:h-28 sm:w-28"
                           />
                         ) : (
-                          <div className="bg-gray-200 px-3 py-2 rounded-lg text-xs">
+                          <div className="max-w-full rounded-lg bg-gray-200 px-3 py-2 text-xs break-words">
                             📄 {file.name}
                           </div>
                         )}
