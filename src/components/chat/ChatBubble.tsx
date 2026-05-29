@@ -12,7 +12,6 @@ export function ChatBubble({ role, text }: Props) {
         isUser ? "justify-end" : "justify-start"
       }`}
     >
-      {/* AI 프로필 */}
       {!isUser && (
         <img
           src="/images/splash7.png"
@@ -21,13 +20,13 @@ export function ChatBubble({ role, text }: Props) {
         />
       )}
 
-      {/* 말풍선 */}
       <div
         className={`max-w-[75%]
-  px-4 py-3 rounded-2xl text-sm shadow-sm
-  break-keep break-words whitespace-pre-wrap leading-relaxed ${
-    isUser ? "bg-[#FECA43] text-white" : "bg-white text-gray-800"
-  }`}
+        px-4 py-3 rounded-2xl text-sm shadow-sm
+        break-keep break-words whitespace-pre-wrap
+        leading-relaxed ${
+          isUser ? "bg-[#FECA43] text-white" : "bg-white text-gray-800"
+        }`}
       >
         {text}
       </div>

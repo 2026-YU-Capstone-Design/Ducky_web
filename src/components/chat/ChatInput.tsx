@@ -49,20 +49,10 @@ export function ChatInput({
   };
 
   return (
-    <div className="w-full px-4 pb-4 pt-2">
-      {/* 마이크 */}
-      <div className="flex justify-center mb-8">
-        <button
-          onClick={startVoice}
-          className="w-16 h-16 rounded-full bg-[#7c7a74] flex items-center justify-center text-[#FECA43] shadow-md active:scale-95 transition hover:bg-[#8e8c81] cursor-pointer"
-        >
-          <Mic className="w-7 h-7" />
-        </button>
-      </div>
-
+    <div className="w-full bg-[#FAF8F5] border-t border-gray-200">
       {/* 파일 미리보기 */}
       {files.length > 0 && (
-        <div className="flex gap-2 mb-2 flex-wrap">
+        <div className="flex gap-2 px-4 pt-3 flex-wrap">
           {files.map((file, i) => (
             <div
               key={i}
@@ -79,37 +69,70 @@ export function ChatInput({
       )}
 
       {/* 입력창 */}
-      <div className="flex items-center bg-white rounded-2xl px-3 py-3 shadow-[0_2px_10px_rgba(0,0,0,0.05)]">
-        <label className="cursor-pointer text-gray-700 mr-2">
-          <Plus className="w-5 h-5" />
+      <div className="px-4 py-3">
+        <div className="flex items-center gap-3">
+          {/* 텍스트 입력 영역 */}
+          <div className="flex flex-1 items-center bg-white rounded-full px-4 py-3 mb-1 shadow-sm">
+            {/* 파일 버튼 */}
+            <label className="cursor-pointer text-gray-700 mr-2">
+              <Plus className="w-5 h-5" />
 
-          <input
-            type="file"
-            className="hidden"
-            multiple
-            onChange={(e) => {
-              const selected = e.target.files;
+              <input
+                type="file"
+                className="hidden"
+                multiple
+                onChange={(e) => {
+                  const selected = e.target.files;
 
-              if (!selected) return;
+                  if (!selected) return;
 
-              setFiles((prev) => [...prev, ...Array.from(selected)]);
-            }}
-          />
-        </label>
+                  setFiles((prev) => [...prev, ...Array.from(selected)]);
+                }}
+              />
+            </label>
 
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="메시지를 입력하세요."
-          className="flex-1 outline-none text-sm px-2 bg-transparent"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") send();
-          }}
-        />
+            {/* 입력 */}
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="메시지를 입력하세요."
+              className="flex-1 outline-none text-sm bg-transparent"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") send();
+              }}
+            />
 
-        <button onClick={send} className="ml-2 text-gray-700 cursor-pointer">
-          <SendHorizontal className="w-5 h-5" />
-        </button>
+            {/* 전송 버튼 */}
+            <button
+              onClick={send}
+              className="text-gray-700 cursor-pointer ml-2"
+            >
+              <SendHorizontal className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* 음성 버튼 */}
+          <button
+            onClick={startVoice}
+            className="
+        w-11 h-11 rounded-full
+        bg-[#FECA43]
+        flex items-center justify-center
+        shrink-0
+        active:scale-95
+        transition-all duration-300
+        cursor-pointer
+
+        shadow-[0_0_12px_rgba(254,202,67,0.55),
+                0_0_24px_rgba(254,202,67,0.25)]
+
+        hover:shadow-[0_0_18px_rgba(254,202,67,0.8),
+                      0_0_34px_rgba(254,202,67,0.35)]
+      "
+          >
+            <Mic className="w-5 h-5 text-[#3a3935]" />
+          </button>
+        </div>
       </div>
     </div>
   );

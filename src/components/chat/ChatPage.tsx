@@ -51,13 +51,13 @@ export function ChatPage() {
       <div className="flex flex-col w-full max-w-sm h-screen relative">
         {/* 헤더 */}
         <div
-          className={`flex items-center justify-center py-3 border-b border-gray-200 bg-[#FAF8F5] ${comfortaa.className}`}
+          className={`flex items-center justify-center py-4 border-b border-[#ECE7DC] bg-[#FAF8F5] ${comfortaa.className}`}
         >
           <h1 className="text-2xl font-bold text-[#FECA43]">Ducky</h1>
         </div>
 
         {/* 채팅 */}
-        <div className="flex-1 overflow-y-auto px-4 py-6 pb-44 space-y-4">
+        <div className="flex-1 overflow-y-auto px-4 py-6 pb-24 space-y-4">
           {messages.map((msg, i) => (
             <div
               key={i}
