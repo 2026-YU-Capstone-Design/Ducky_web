@@ -31,15 +31,15 @@ export function LoginOptions({
   handleSocialLogin,
 }: LoginOptionsProps) {
   return (
-    <div className="space-y-12">
-      <div className="flex flex-col items-center space-y-6">
-        <div className="relative transition-all duration-500 hover:scale-105 flex items-center justify-center h-44 w-44">
+    <div className="flex w-full flex-col gap-10 sm:gap-12 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(20rem,24rem)] lg:items-center lg:gap-16">
+      <div className="flex flex-col items-center space-y-5 sm:space-y-6 lg:items-start lg:space-y-7">
+        <div className="relative flex h-36 w-36 items-center justify-center transition-all duration-500 hover:scale-105 sm:h-44 sm:w-44 lg:h-64 lg:w-64">
           {[1, 2, 3, 4, 5, 6, 7].map((num) => (
             <img
               key={num}
               src={`/images/splash${num}.png`}
               alt="Ducky Scholar Character"
-              className={`absolute inset-0 h-44 w-44 object-contain transition-all duration-1000 ease-in-out ${
+              className={`absolute inset-0 h-full w-full object-contain transition-all duration-1000 ease-in-out ${
                 currentSplash === num
                   ? "opacity-100 scale-100 z-10"
                   : "opacity-0 scale-95 z-0 pointer-events-none"
@@ -48,17 +48,17 @@ export function LoginOptions({
           ))}
         </div>
         <h1
-          className={`text-6xl font-bold tracking-tight text-[#FECA43] ${comfortaaClassName} select-none`}
+          className={`text-[clamp(3.25rem,13vw,5.75rem)] font-bold tracking-tight text-[#FECA43] ${comfortaaClassName} select-none`}
         >
           Ducky
         </h1>
       </div>
 
-      <div className="space-y-3.5">
+      <div className="mx-auto w-full max-w-md space-y-3.5 lg:mx-0">
         <Button
           onClick={() => setEmailMode("login")}
           disabled={isLoading}
-          className="w-full h-13 rounded-xl bg-[#EFECE5] text-[#333333] hover:bg-[#E5E1D8] font-bold border-none shadow-none flex items-center justify-center gap-2 transition-transform active:scale-[0.99] disabled:opacity-50 text-base"
+          className="h-auto min-h-13 w-full whitespace-normal rounded-xl bg-[#EFECE5] px-4 py-3 text-center text-base font-bold leading-tight text-[#333333] shadow-none transition-transform hover:bg-[#E5E1D8] active:scale-[0.99] disabled:opacity-50"
         >
           <Mail className="h-5 w-5 text-[#333333]" />
           이메일로 로그인
@@ -66,7 +66,7 @@ export function LoginOptions({
         <Button
           onClick={() => handleSocialLogin("kakao")}
           disabled={isLoading}
-          className="w-full h-13 rounded-xl bg-[#FFE600] text-[#191919] hover:bg-[#F2DA00] font-bold border-none shadow-none flex items-center justify-center gap-2 transition-transform active:scale-[0.99] disabled:opacity-50 text-base"
+          className="h-auto min-h-13 w-full whitespace-normal rounded-xl bg-[#FFE600] px-4 py-3 text-center text-base font-bold leading-tight text-[#191919] shadow-none transition-transform hover:bg-[#F2DA00] active:scale-[0.99] disabled:opacity-50"
         >
           {isLoading ? (
             <Loader2 className="h-5 w-5 animate-spin" />
@@ -78,7 +78,7 @@ export function LoginOptions({
         <Button
           onClick={() => handleSocialLogin("naver")}
           disabled={isLoading}
-          className="w-full h-13 rounded-xl bg-[#03C75A] text-white hover:bg-[#02B350] font-bold border-none shadow-none flex items-center justify-center gap-2 transition-transform active:scale-[0.99] disabled:opacity-50 text-base"
+          className="h-auto min-h-13 w-full whitespace-normal rounded-xl bg-[#03C75A] px-4 py-3 text-center text-base font-bold leading-tight text-white shadow-none transition-transform hover:bg-[#02B350] active:scale-[0.99] disabled:opacity-50"
         >
           {isLoading ? (
             <Loader2 className="h-5 w-5 animate-spin" />

@@ -20,8 +20,8 @@ export function TermsModal({ showTerms, setShowTerms }: TermsModalProps) {
   const title = isService ? "서비스 이용 약관" : "마케팅 및 메시지 수신 동의";
 
   return (
-    <div className="absolute inset-0 z-50 flex flex-col bg-[#FAF8F5] animate-fade-in duration-300 rounded-lg">
-      <div className="flex items-center justify-between p-2 pb-4 mb-2 border-b border-zinc-200/60">
+    <div className="fixed inset-0 z-50 flex flex-col bg-[#FAF8F5] p-4 animate-fade-in duration-300 sm:absolute sm:p-0 sm:rounded-lg">
+      <div className="mb-2 flex shrink-0 items-center justify-between border-b border-zinc-200/60 p-2 pb-4">
         <button
           type="button"
           onClick={() => setShowTerms(null)}
@@ -29,10 +29,10 @@ export function TermsModal({ showTerms, setShowTerms }: TermsModalProps) {
         >
           <ChevronLeft className="h-6 w-6 text-zinc-800" />
         </button>
-        <h3 className="font-extrabold text-zinc-800 text-lg">{title}</h3>
+        <h3 className="min-w-0 flex-1 text-center text-base font-extrabold text-zinc-800 break-keep sm:text-lg">{title}</h3>
         <div className="w-10"></div> {/* Spacer for centering */}
       </div>
-      <div className="flex-1 overflow-y-auto text-sm text-zinc-600 space-y-5 leading-relaxed pr-2 pb-10">
+      <div className="min-h-0 flex-1 space-y-5 overflow-y-auto pb-10 pr-1 text-sm leading-relaxed text-zinc-600 sm:pr-2">
         {isService ? (
           <>
             <div>

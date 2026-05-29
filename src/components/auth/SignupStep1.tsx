@@ -31,7 +31,7 @@ export function SignupStep1({
   setError,
 }: SignupStep1Props) {
   return (
-    <div className="w-full flex flex-col items-start space-y-10 animate-fade-in duration-300 pt-2">
+    <div className="flex w-full flex-col items-start space-y-8 pt-0 animate-fade-in duration-300 sm:space-y-10 sm:pt-2">
       <button
         type="button"
         onClick={() => {
@@ -43,7 +43,7 @@ export function SignupStep1({
       >
         <ChevronLeft className="h-7 w-7 text-[#333333]" />
       </button>
-      <h2 className="text-3xl font-extrabold tracking-tight text-[#333333] select-none">
+      <h2 className="text-2xl font-extrabold tracking-tight text-[#333333] break-keep select-none sm:text-3xl">
         이름을 입력해주세요
       </h2>
       <div className="w-full space-y-2 pt-4">
@@ -63,7 +63,7 @@ export function SignupStep1({
         <Button
           onClick={() => setSignupStep(2)}
           disabled={name.trim().length === 0}
-          className={`w-full h-14 rounded-xl font-bold text-base transition-all active:scale-[0.99] border-none shadow-none ${
+          className={`h-auto min-h-14 w-full whitespace-normal rounded-xl border-none px-4 py-3 text-base font-bold leading-tight shadow-none transition-all active:scale-[0.99] ${
             name.trim().length > 0
               ? "bg-[#FECA43] text-white hover:bg-[#FECA43]/90"
               : "bg-[#EFECE5] text-[#9E988E] hover:bg-[#EFECE5]"
