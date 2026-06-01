@@ -47,8 +47,8 @@ export function ChatPage() {
   }, [messages]);
 
   return (
-    <div className="flex min-h-dvh w-full flex-col items-center bg-[#FAF8F5] sm:px-4 lg:px-8">
-      <div className="relative flex h-dvh w-full max-w-full flex-col bg-[#FAF8F5] sm:my-4 sm:h-[calc(100dvh-2rem)] sm:max-w-2xl sm:overflow-hidden sm:rounded-lg sm:border sm:border-[#ECE7DC] sm:shadow-sm lg:max-w-4xl xl:max-w-5xl">
+    <div className="flex h-[calc(100dvh-6rem)] w-full flex-col items-center bg-[#FAF8F5] sm:px-4 md:h-dvh lg:px-8">
+      <div className="relative flex h-full w-full max-w-full flex-col bg-[#FAF8F5] sm:my-4 sm:h-[calc(100dvh-2rem)] sm:max-w-2xl sm:overflow-hidden sm:rounded-lg sm:border sm:border-[#ECE7DC] sm:shadow-sm lg:max-w-4xl xl:max-w-5xl">
         {/* 헤더 */}
         <div
           className={`flex shrink-0 items-center justify-center border-b border-[#ECE7DC] bg-[#FAF8F5] px-4 py-4 ${comfortaa.className}`}
