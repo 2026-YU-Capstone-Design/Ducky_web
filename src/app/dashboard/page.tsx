@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { AppShell } from "@/components/layout/AppShell";
 
 export default function DashboardPage() {
   return (
-    <main className="flex min-h-dvh w-full bg-[#FAF8F5] px-5 py-10 text-[#2E2A22] sm:px-8">
-      <section className="mx-auto flex w-full max-w-2xl flex-col justify-center">
-        <p className="mb-3 text-2xl font-bold text-[#FECA43]">Ducky</p>
+    <AppShell>
+      <section className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center px-5 py-10 sm:px-8">
+        <p className="mb-3 text-sm font-semibold text-[#B88700]">Ducky</p>
 
         <h1 className="text-3xl font-bold tracking-tight text-gray-950 sm:text-4xl">
           대시보드 준비 중
@@ -29,6 +30,6 @@ export default function DashboardPage() {
           </Link>
         </div>
       </section>
-    </main>
+    </AppShell>
   );
 }
