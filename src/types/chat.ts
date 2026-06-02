@@ -22,5 +22,6 @@ export interface ChatMessage {
   type: ChatMessageType;
   createdAt: string;
   hintLevel?: 1 | 2 | 3;
+  hintNumber?: number;
   attachments?: ChatAttachment[];
 }

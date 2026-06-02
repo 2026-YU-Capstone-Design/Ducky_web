@@ -1,163 +1,138 @@
 "use client";
 
-import { useState } from "react";
-import { Mic, SendHorizontal, Plus, X } from "lucide-react";
+import { useRef, useState } from "react";
+import { Paperclip, SendHorizontal, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import type { VoiceInputStatus } from "@/hooks/useVoiceInput";
+import { VoiceInputButton } from "./VoiceInputButton";
 
-type BrowserSpeechRecognitionEvent = {
-  results: {
-    [index: number]: {
-      [index: number]: {
-        transcript: string;
-      };
-    };
-  };
-};
-
-type BrowserSpeechRecognition = {
-  lang: string;
-  onresult: ((event: BrowserSpeechRecognitionEvent) => void) | null;
-  start: () => void;
-};
-
-type BrowserSpeechRecognitionConstructor = new () => BrowserSpeechRecognition;
-
-declare global {
-  interface Window {
-    SpeechRecognition?: BrowserSpeechRecognitionConstructor;
-    webkitSpeechRecognition?: BrowserSpeechRecognitionConstructor;
-  }
+interface ChatInputProps {
+  disabled?: boolean;
+  onChange: (value: string) => void;
+  onSend: (payload: { text: string; files?: File[] }) => void;
+  onVoiceCancel: () => void;
+  onVoiceStart: () => void;
+  value: string;
+  voiceStatus: VoiceInputStatus;
+  voiceStatusLabel: string;
 }
 
 export function ChatInput({
+  disabled,
+  onChange,
   onSend,
-}: {
-  onSend: (payload: { text: string; files?: File[] }) => void;
-}) {
-  const [input, setInput] = useState("");
+  onVoiceCancel,
+  onVoiceStart,
+  value,
+  voiceStatus,
+  voiceStatusLabel,
+}: ChatInputProps) {
   const [files, setFiles] = useState<File[]>([]);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const canSend = value.trim().length > 0 || files.length > 0;
 
   const send = () => {
-    if (!input.trim() && files.length === 0) return;
+    if (!canSend || disabled) return;
 
     onSend({
-      text: input,
+      text: value,
       files,
     });
 
-    setInput("");
+    onChange("");
     setFiles([]);
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  const removeFile = (i: number) => {
-    setFiles((prev) => prev.filter((_, idx) => idx !== i));
-  };
-
-  const startVoice = () => {
-    const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    if (!SpeechRecognition) {
-      alert("음성 인식 지원 안됨");
-      return;
-    }
-
-    const recognition = new SpeechRecognition();
-    recognition.lang = "ko-KR";
-
-    recognition.onresult = (e) => {
-      const text = e.results[0][0].transcript;
-      setInput(text);
-    };
-
-    recognition.start();
+  const removeFile = (index: number) => {
+    setFiles((prev) => prev.filter((_, itemIndex) => itemIndex !== index));
   };
 
   return (
-    <div className="w-full border-t border-gray-200 bg-[#FAF8F5]">
-      {/* 파일 미리보기 */}
+    <form
+      className="border-t border-[#E7DDC8] bg-[#FAF8F5] px-3 py-3 sm:px-4 lg:px-5"
+      onSubmit={(event) => {
+        event.preventDefault();
+        send();
+      }}
+    >
       {files.length > 0 && (
-        <div className="flex flex-wrap gap-2 px-3 pt-3 sm:px-4 lg:px-6">
-          {files.map((file, i) => (
-            <div
-              key={i}
-              className="flex max-w-full items-center gap-1 rounded bg-gray-200 px-2 py-1 text-xs"
+        <div className="mb-3 flex flex-wrap gap-2">
+          {files.map((file, index) => (
+            <span
+              key={`${file.name}-${index}`}
+              className="inline-flex max-w-full items-center gap-2 rounded-lg border border-[#E7DDC8] bg-white px-2.5 py-1.5 text-xs text-gray-700"
             >
-              <span className="max-w-[9rem] truncate sm:max-w-[12rem]">{file.name}</span>
-
-              <button onClick={() => removeFile(i)}>
-                <X className="w-3 h-3" />
+              <span className="max-w-[10rem] truncate sm:max-w-[14rem]">
+                {file.name}
+              </span>
+              <button
+                type="button"
+                onClick={() => removeFile(index)}
+                className="rounded text-gray-500 hover:text-gray-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FECA43]"
+                aria-label={`${file.name} 제거`}
+              >
+                <X className="size-3.5" aria-hidden="true" />
               </button>
-            </div>
+            </span>
           ))}
         </div>
       )}
 
-      {/* 입력창 */}
-      <div className="px-3 py-3 sm:px-4 lg:px-6">
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* 텍스트 입력 영역 */}
-          <div className="mb-1 flex min-w-0 flex-1 items-center rounded-full bg-white px-3 py-3 shadow-sm sm:px-4">
-            {/* 파일 버튼 */}
-            <label className="mr-2 shrink-0 cursor-pointer text-gray-700">
-              <Plus className="w-5 h-5" />
+      <div className="flex items-end gap-2">
+        <label
+          className="inline-flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-[#E7DDC8] bg-white text-gray-700 shadow-sm transition-colors hover:bg-[#FFF7E0] focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#FECA43]"
+          title="파일 첨부"
+        >
+          <Paperclip className="size-5" aria-hidden="true" />
+          <span className="sr-only">파일 첨부</span>
+          <input
+            ref={fileInputRef}
+            type="file"
+            className="sr-only"
+            multiple
+            onChange={(event) => {
+              const selectedFiles = event.target.files;
+              if (!selectedFiles) return;
+              setFiles((prev) => [...prev, ...Array.from(selectedFiles)]);
+            }}
+          />
+        </label>
 
-              <input
-                type="file"
-                className="hidden"
-                multiple
-                onChange={(e) => {
-                  const selected = e.target.files;
+        <Textarea
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          placeholder="설명해보고 싶은 부분을 입력하세요."
+          className="max-h-32 min-h-11 resize-none border-[#E7DDC8] bg-white px-4 py-3 text-sm shadow-sm focus-visible:border-[#FECA43] focus-visible:ring-[#FECA43]/30"
+          disabled={disabled}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" && !event.shiftKey) {
+              event.preventDefault();
+              send();
+            }
+          }}
+        />
 
-                  if (!selected) return;
+        <Button
+          type="submit"
+          disabled={!canSend || disabled}
+          size="icon-lg"
+          title="전송"
+          aria-label="메시지 전송"
+          className="size-11 rounded-lg bg-[#2E2A22] text-white hover:bg-[#4A4438]"
+        >
+          <SendHorizontal className="size-5" aria-hidden="true" />
+        </Button>
 
-                  setFiles((prev) => [...prev, ...Array.from(selected)]);
-                }}
-              />
-            </label>
-
-            {/* 입력 */}
-            <input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="메시지를 입력하세요."
-              className="min-w-0 flex-1 bg-transparent text-sm outline-none"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") send();
-              }}
-            />
-
-            {/* 전송 버튼 */}
-            <button
-              onClick={send}
-              className="ml-2 shrink-0 cursor-pointer text-gray-700"
-            >
-              <SendHorizontal className="w-5 h-5" />
-            </button>
-          </div>
-
-          {/* 음성 버튼 */}
-          <button
-            onClick={startVoice}
-            className="
-        h-10 w-10 rounded-full sm:h-11 sm:w-11
-        bg-[#FECA43]
-        flex items-center justify-center
-        shrink-0
-        active:scale-95
-        transition-all duration-300
-        cursor-pointer
-
-        shadow-[0_0_12px_rgba(254,202,67,0.55),
-                0_0_24px_rgba(254,202,67,0.25)]
-
-        hover:shadow-[0_0_18px_rgba(254,202,67,0.8),
-                      0_0_34px_rgba(254,202,67,0.35)]
-      "
-          >
-            <Mic className="w-5 h-5 text-[#3a3935]" />
-          </button>
-        </div>
+        <VoiceInputButton
+          disabled={disabled}
+          onCancel={onVoiceCancel}
+          onStart={onVoiceStart}
+          status={voiceStatus}
+          statusLabel={voiceStatusLabel}
+        />
       </div>
-    </div>
+    </form>
   );
 }

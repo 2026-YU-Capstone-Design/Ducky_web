@@ -1,112 +1,179 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Bot, Lightbulb } from "lucide-react";
+import { Comfortaa } from "next/font/google";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { useMockChat } from "@/hooks/useMockChat";
+import { useVoiceInput } from "@/hooks/useVoiceInput";
 import { ChatBubble } from "./ChatBubble";
 import { ChatInput } from "./ChatInput";
-import { Comfortaa } from "next/font/google";
+import { HintPanel } from "./HintPanel";
 
 const comfortaa = Comfortaa({
   subsets: ["latin"],
   weight: ["700"],
 });
 
-type Message = {
-  role: "user" | "bot";
-  text?: string;
-  files?: File[];
-};
-
 export function ChatPage() {
-  const [messages, setMessages] = useState<Message[]>([
-    { role: "bot", text: "xx님 안녕하세요! 무엇을 도와드릴까요?" },
-  ]);
-
-  const sendMessage = (data: { text: string; files?: File[] }) => {
-    const userMsg: Message = {
-      role: "user",
-      text: data.text.trim() || undefined,
-      files: data.files,
-    };
-
-    setMessages((prev) => [...prev, userMsg]);
-
-    setTimeout(() => {
-      setMessages((prev) => [...prev, { role: "bot", text: "응답입니다 👍" }]);
-    }, 800);
-  };
-
-  const openFile = (file: File) => {
-    const url = URL.createObjectURL(file);
-    window.open(url);
-  };
-
+  const [draft, setDraft] = useState("");
+  const [isHintOpen, setIsHintOpen] = useState(false);
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  const {
+    activeSession,
+    completeSession,
+    hintCount,
+    hintHistory,
+    isCompleted,
+    isThinking,
+    messages,
+    requestHint,
+    sendMessage,
+    stageIndex,
+  } = useMockChat();
+
+  const handleTranscript = useCallback((text: string) => {
+    setDraft((current) => (current.trim() ? `${current}\n${text}` : text));
+  }, []);
+
+  const voice = useVoiceInput({
+    onTranscript: handleTranscript,
+  });
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [messages, isThinking]);
+
+  const hintPanel = (
+    <HintPanel
+      activeTitle={activeSession.title}
+      activeTopic={activeSession.topic}
+      hintCount={hintCount}
+      hintHistory={hintHistory}
+      isCompleted={isCompleted}
+      isThinking={isThinking}
+      onComplete={completeSession}
+      onRequestHint={requestHint}
+      stageIndex={stageIndex}
+    />
+  );
 
   return (
-    <div className="flex h-[calc(100dvh-6rem)] w-full flex-col items-center bg-[#FAF8F5] sm:px-4 md:h-dvh lg:px-8">
-      <div className="relative flex h-full w-full max-w-full flex-col bg-[#FAF8F5] sm:my-4 sm:h-[calc(100dvh-2rem)] sm:max-w-2xl sm:overflow-hidden sm:rounded-lg sm:border sm:border-[#ECE7DC] sm:shadow-sm lg:max-w-4xl xl:max-w-5xl">
-        {/* 헤더 */}
-        <div
-          className={`flex shrink-0 items-center justify-center border-b border-[#ECE7DC] bg-[#FAF8F5] px-4 py-4 ${comfortaa.className}`}
-        >
-          <h1 className="text-2xl font-bold text-[#FECA43]">Ducky</h1>
-        </div>
+    <div className="flex h-[calc(100dvh-5.75rem)] min-h-0 w-full bg-[#FAF8F5] md:h-dvh">
+      <div className="flex min-h-0 w-full gap-4 p-0 sm:p-4 lg:p-6">
+        <section className="flex min-w-0 flex-1 flex-col overflow-hidden bg-[#FAF8F5] sm:rounded-lg sm:border sm:border-[#E7DDC8] sm:bg-white sm:shadow-sm">
+          <header className="flex shrink-0 items-center justify-between gap-3 border-b border-[#E7DDC8] bg-[#FAF8F5] px-4 py-3 sm:bg-white lg:px-5">
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-[#FECA43] text-[#2E2A22]">
+                <Bot className="size-5" aria-hidden="true" />
+              </div>
+              <div className="min-w-0">
+                <h1
+                  className={`truncate text-xl font-bold text-[#FECA43] ${comfortaa.className}`}
+                >
+                  Ducky
+                </h1>
+                <p className="truncate text-xs text-gray-500">
+                  {activeSession.topic} 질문 훈련
+                </p>
+              </div>
+            </div>
 
-        {/* 채팅 */}
-        <div className="flex-1 space-y-4 overflow-y-auto px-3 py-5 pb-28 sm:px-5 sm:py-6 sm:pb-32 lg:px-8">
-          {messages.map((msg, i) => (
-            <div
-              key={i}
-              className={`flex flex-col ${
-                msg.role === "user" ? "items-end" : "items-start"
-              } w-full`}
+            <Button
+              type="button"
+              onClick={() => setIsHintOpen(true)}
+              className="h-9 gap-2 bg-[#FECA43] px-3 font-bold text-[#2E2A22] hover:bg-[#F5B522] lg:hidden"
             >
-              {/* 파일 */}
-              {msg.files && msg.files.length > 0 && (
-                <div className="mb-2 mr-1 flex max-w-[min(20rem,82%)] flex-wrap gap-2 sm:max-w-[70%]">
-                  {msg.files.map((file, idx) => {
-                    const isImage = file.type.startsWith("image/");
+              <Lightbulb className="size-4" aria-hidden="true" />
+              힌트
+            </Button>
+          </header>
 
-                    return (
-                      <div
-                        key={idx}
-                        onClick={() => openFile(file)}
-                        className="cursor-pointer"
-                      >
-                        {isImage ? (
-                          <img
-                            src={URL.createObjectURL(file)}
-                            alt={file.name}
-                            className="h-24 w-24 rounded-lg object-cover shadow sm:h-28 sm:w-28"
-                          />
-                        ) : (
-                          <div className="max-w-full rounded-lg bg-gray-200 px-3 py-2 text-xs break-words">
-                            📄 {file.name}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
+          <ScrollArea className="min-h-0 flex-1">
+            <div className="space-y-4 px-3 py-5 sm:px-5 lg:px-8">
+              <div className="mx-auto max-w-3xl rounded-lg border border-[#E7DDC8] bg-[#FFF7E0] px-4 py-3 text-sm leading-relaxed text-[#4A4438] break-keep">
+                <p className="font-bold text-[#6B5200]">오늘의 대화 목표</p>
+                <p className="mt-1">
+                  정답을 바로 받기보다, 개념을 자신의 말로 설명하도록 질문과
+                  힌트를 필요한 만큼 사용합니다.
+                </p>
+              </div>
+
+              {messages.map((message) => (
+                <ChatBubble key={message.id} message={message} />
+              ))}
+
+              {isThinking && (
+                <div className="flex items-end gap-2">
+                  <div className="flex size-8 shrink-0 items-center justify-center rounded-full border border-[#E7DDC8] bg-white text-[#B88700]">
+                    <Bot className="size-4" aria-hidden="true" />
+                  </div>
+                  <div className="rounded-lg border border-[#E7DDC8] bg-white px-4 py-3 text-sm text-gray-600 shadow-sm">
+                    Ducky가 다음 질문을 고르는 중
+                    <span className="ml-1 inline-flex w-6 animate-pulse">
+                      ...
+                    </span>
+                  </div>
                 </div>
               )}
 
-              {/* 텍스트 */}
-              {msg.text && <ChatBubble role={msg.role} text={msg.text} />}
+              <div ref={bottomRef} />
             </div>
-          ))}
+          </ScrollArea>
 
-          <div ref={bottomRef} />
-        </div>
+          <ChatInput
+            disabled={isThinking || isCompleted}
+            onChange={setDraft}
+            onSend={sendMessage}
+            onVoiceCancel={voice.cancel}
+            onVoiceStart={voice.start}
+            value={draft}
+            voiceStatus={voice.status}
+            voiceStatusLabel={voice.statusLabel}
+          />
+        </section>
 
-        {/* 입력창 */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <ChatInput onSend={sendMessage} />
-        </div>
+        <aside className="hidden min-h-0 w-88 shrink-0 lg:block">
+          {hintPanel}
+        </aside>
       </div>
+
+      <Sheet open={isHintOpen} onOpenChange={setIsHintOpen}>
+        <SheetContent
+          side="bottom"
+          className="max-h-[84dvh] rounded-t-lg bg-[#FAF8F5] p-0"
+        >
+          <SheetHeader className="border-b border-[#E7DDC8] bg-white p-4 pr-12">
+            <SheetTitle className="text-lg font-bold">힌트 패널</SheetTitle>
+            <SheetDescription>
+              막히는 지점에서 단서를 계속 요청하고, 알겠으면 완료하세요.
+            </SheetDescription>
+          </SheetHeader>
+          <div className="max-h-[calc(84dvh-5rem)] overflow-y-auto p-4">
+            <HintPanel
+              activeTitle={activeSession.title}
+              activeTopic={activeSession.topic}
+              className="border-0 shadow-none"
+              hintCount={hintCount}
+              hintHistory={hintHistory}
+              isCompleted={isCompleted}
+              isThinking={isThinking}
+              onComplete={completeSession}
+              onRequestHint={requestHint}
+              showHeader={false}
+              stageIndex={stageIndex}
+            />
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }
