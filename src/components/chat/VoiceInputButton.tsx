@@ -38,11 +38,11 @@ export function VoiceInputButton({
       aria-label={isActive ? "음성 입력 취소" : "음성 입력 시작"}
       title={statusLabel}
       className={cn(
-        "size-11 rounded-full border border-[#E7DDC8] bg-white text-[#2E2A22] shadow-sm hover:bg-[#FFF7E0]",
+        "size-11 rounded-full border border-[#E7DDC8] bg-white text-[#2E2A22] shadow-sm hover:bg-[#FFF7E0] dark:border-white/10 dark:bg-[#24211D] dark:text-white dark:shadow-none dark:hover:bg-[#2A251D]",
         status === "idle" &&
-          "bg-[#FECA43] hover:bg-[#F5B522] focus-visible:ring-[#FECA43]/50",
+          "bg-[#FECA43] text-[#2E2A22] hover:bg-[#F5B522] focus-visible:ring-[#FECA43]/50 dark:bg-[#FECA43] dark:text-[#2E2A22] dark:hover:bg-[#F5B522]",
         status === "listening" &&
-          "border-[#FECA43] bg-[#FFF1BC] text-[#6B5200] shadow-[0_0_0_4px_rgba(254,202,67,0.22)]",
+          "border-[#FECA43] bg-[#FFF1BC] text-[#6B5200] shadow-[0_0_0_4px_rgba(254,202,67,0.22)] dark:border-[#FECA43] dark:bg-[#2A251D] dark:text-[#FECA43]",
       )}
       size="icon-lg"
     >
