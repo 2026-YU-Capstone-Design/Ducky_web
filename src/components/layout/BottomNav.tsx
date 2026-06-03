@@ -26,11 +26,25 @@ export function BottomNav() {
               aria-current={isActive ? "page" : undefined}
               className={cn(
                 "flex min-w-0 flex-col items-center justify-center gap-1 rounded-lg px-1 text-[11px] font-medium leading-none text-gray-500 transition-colors hover:bg-[#FFF7E0] hover:text-gray-950 dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white",
-                isActive && "bg-[#FECA43] text-[#2E2A22] hover:bg-[#FECA43]",
+                isActive &&
+                  "bg-[#FECA43] font-bold text-[#2E2A22] hover:bg-[#FECA43] dark:bg-[#FECA43] dark:text-[#2E2A22] dark:hover:bg-[#FECA43]",
               )}
             >
-              <Icon className="size-5 shrink-0" aria-hidden="true" />
-              <span className="w-full truncate text-center">{item.label}</span>
+              <Icon
+                className={cn(
+                  "size-5 shrink-0",
+                  isActive && "text-[#2E2A22] dark:text-[#2E2A22]",
+                )}
+                aria-hidden="true"
+              />
+              <span
+                className={cn(
+                  "w-full truncate text-center",
+                  isActive && "text-[#2E2A22] dark:text-[#2E2A22]",
+                )}
+              >
+                {item.label}
+              </span>
             </Link>
           );
         })}

@@ -1,11 +1,19 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Bell, Moon, Upload, UserRound } from "lucide-react";
+import {
+  ArrowRight,
+  Bell,
+  Brain,
+  Moon,
+  UserRound,
+  type LucideIcon,
+} from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { mockUser } from "@/data/mockUser";
-import type { LearningLevel } from "@/types/user";
+import type { LearningLevel, LearningStyle } from "@/types/user";
 
 const levelLabels: Record<LearningLevel, string> = {
   advanced: "advanced",
@@ -14,6 +22,23 @@ const levelLabels: Record<LearningLevel, string> = {
 };
 
 const DARK_MODE_STORAGE_KEY = "ducky.settings.darkMode";
+
+const learningStyleLabels: {
+  [Key in keyof LearningStyle]: Record<LearningStyle[Key], string>;
+} = {
+  processing: {
+    active: "직접 시도형",
+    reflective: "천천히 사고형",
+  },
+  expression: {
+    visual: "시각 자료형",
+    verbal: "언어 설명형",
+  },
+  understanding: {
+    sequential: "단계 학습형",
+    global: "전체 구조형",
+  },
+};
 
 function getInitialDarkMode() {
   if (typeof window === "undefined") {
@@ -45,7 +70,7 @@ function SectionTitle({
   icon: Icon,
 }: {
   children: string;
-  icon: typeof UserRound;
+  icon: LucideIcon;
 }) {
   return (
     <div className="flex items-center gap-2">
@@ -60,15 +85,30 @@ function SectionTitle({
 export function SettingsDashboard() {
   const [darkMode, setDarkMode] = useState(getInitialDarkMode);
   const [studyReminder, setStudyReminder] = useState(true);
-  const [fileName, setFileName] = useState("");
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", darkMode);
     window.localStorage.setItem(DARK_MODE_STORAGE_KEY, String(darkMode));
   }, [darkMode]);
 
+  const learningStyleRows = [
+    {
+      label: "처리 방식",
+      value: learningStyleLabels.processing[mockUser.learningStyle.processing],
+    },
+    {
+      label: "표현 선호",
+      value: learningStyleLabels.expression[mockUser.learningStyle.expression],
+    },
+    {
+      label: "이해 구조",
+      value:
+        learningStyleLabels.understanding[mockUser.learningStyle.understanding],
+    },
+  ];
+
   return (
-    <section className="mx-auto flex w-full max-w-[944px] flex-1 flex-col px-5 py-9 transition-colors sm:px-8 lg:px-0">
+    <section className="mx-auto flex w-full max-w-[944px] flex-1 flex-col px-5 py-9 transition-colors sm:px-8 lg:px-10">
       <div className="border-b border-[#E7DDC8] pb-7 dark:border-white/10">
         <p className="text-sm font-semibold text-[#B88700]">설정</p>
         <h1 className="mt-3 text-3xl font-bold leading-tight tracking-tight text-gray-950 break-keep dark:text-white sm:text-4xl">
@@ -147,28 +187,35 @@ export function SettingsDashboard() {
 
         <Card className="min-h-[200px] rounded-lg border border-[#E7DDC8] bg-white py-0 shadow-sm transition-colors dark:border-white/10 dark:bg-[#24211D] dark:shadow-none">
           <CardContent className="p-5">
-            <SectionTitle icon={Upload}>자료 업로드</SectionTitle>
+            <SectionTitle icon={Brain}>학습 스타일</SectionTitle>
 
-            <label
-              className="mt-5 flex min-h-28 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-[#D6BE91] bg-[#FAF8F5] px-4 text-center transition-colors hover:bg-[#FFF7E0] focus-within:ring-3 focus-within:ring-[#FECA43]/50 dark:border-[#6B5A32] dark:bg-[#1D1B18] dark:hover:bg-[#2A251D]"
-              htmlFor="settings-file"
+            <p className="mt-4 text-sm leading-relaxed text-gray-500 break-keep dark:text-gray-400">
+              Ducky가 답변 흐름을 맞출 때 참고하는 현재 학습 성향입니다.
+            </p>
+
+            <dl className="mt-4 divide-y divide-[#E7DDC8] dark:divide-white/10">
+              {learningStyleRows.map((row) => (
+                <div
+                  key={row.label}
+                  className="flex items-center justify-between gap-4 py-3 first:pt-0"
+                >
+                  <dt className="text-sm text-gray-500 dark:text-gray-400">
+                    {row.label}
+                  </dt>
+                  <dd className="text-right text-sm font-bold text-gray-950 dark:text-white">
+                    {row.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+
+            <Link
+              href="/onboarding"
+              className="mt-4 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-lg bg-[#FECA43] px-4 text-sm font-bold text-[#2E2A22] transition-colors hover:bg-[#F5B522] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FECA43]"
             >
-              <Upload className="size-6 text-[#B88700]" aria-hidden="true" />
-              <span className="mt-2 text-sm font-bold text-gray-950 dark:text-white">
-                파일 선택
-              </span>
-              <span className="mt-2 max-w-full truncate text-xs text-gray-500 dark:text-gray-400">
-                {fileName || "실제 업로드 없이 파일명만 표시합니다."}
-              </span>
-              <input
-                className="sr-only"
-                id="settings-file"
-                onChange={(event) =>
-                  setFileName(event.currentTarget.files?.[0]?.name ?? "")
-                }
-                type="file"
-              />
-            </label>
+              다시 진단하기
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
           </CardContent>
         </Card>
       </div>
