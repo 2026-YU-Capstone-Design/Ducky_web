@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
+import { ServiceWorkerRegistration } from "@/components/pwa/ServiceWorkerRegistration";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -22,8 +23,25 @@ try {
 `;
 
 export const metadata: Metadata = {
+  applicationName: "Ducky",
   title: "Ducky",
   description: "AI 러버덕 학습 도우미",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Ducky",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FECA43" },
+    { media: "(prefers-color-scheme: dark)", color: "#171512" },
+  ],
 };
 
 export default function RootLayout({
@@ -41,6 +59,7 @@ export default function RootLayout({
         <Script id="ducky-theme-init" strategy="beforeInteractive">
           {themeInitScript}
         </Script>
+        <ServiceWorkerRegistration />
         {children}
       </body>
     </html>

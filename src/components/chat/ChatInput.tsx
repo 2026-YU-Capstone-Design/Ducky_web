@@ -18,6 +18,8 @@ interface ChatInputProps {
   voiceStatusLabel: string;
 }
 
+const ACCEPTED_ATTACHMENT_TYPES = ".pdf,.txt,.md,.doc,.docx,.ppt,.pptx,.png,.jpg,.jpeg,.csv,.json";
+
 export function ChatInput({
   disabled,
   onChange,
@@ -64,6 +66,9 @@ export function ChatInput({
               key={`${file.name}-${index}`}
               className="inline-flex max-w-full items-center gap-2 rounded-lg border border-[#E7DDC8] bg-white px-2.5 py-1.5 text-xs text-gray-700 transition-colors dark:border-white/10 dark:bg-[#24211D] dark:text-gray-300"
             >
+              <span className="shrink-0 font-bold text-[#B88700] dark:text-[#FECA43]">
+                세션 첨부
+              </span>
               <span className="max-w-[10rem] truncate sm:max-w-[14rem]">
                 {file.name}
               </span>
@@ -83,12 +88,13 @@ export function ChatInput({
       <div className="flex items-end gap-2">
         <label
           className="inline-flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-[#E7DDC8] bg-white text-gray-700 shadow-sm transition-colors hover:bg-[#FFF7E0] focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#FECA43] dark:border-white/10 dark:bg-[#24211D] dark:text-gray-300 dark:shadow-none dark:hover:bg-[#2A251D]"
-          title="파일 첨부"
+          title="세션 자료 첨부"
         >
           <Paperclip className="size-5" aria-hidden="true" />
-          <span className="sr-only">파일 첨부</span>
+          <span className="sr-only">세션 자료 첨부</span>
           <input
             ref={fileInputRef}
+            accept={ACCEPTED_ATTACHMENT_TYPES}
             type="file"
             className="sr-only"
             multiple
@@ -103,7 +109,7 @@ export function ChatInput({
         <Textarea
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          placeholder="설명해보고 싶은 부분을 입력하세요."
+          placeholder="질문하거나, 자료를 붙여 같이 물어보세요."
           className="max-h-32 min-h-11 resize-none border-[#E7DDC8] bg-white px-4 py-3 text-sm shadow-sm focus-visible:border-[#FECA43] focus-visible:ring-[#FECA43]/30 dark:border-white/10 dark:bg-[#1D1B18] dark:text-white dark:shadow-none dark:placeholder:text-gray-500"
           disabled={disabled}
           onKeyDown={(event) => {
