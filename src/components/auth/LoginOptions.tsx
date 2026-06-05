@@ -1,6 +1,7 @@
 "use client";
 
 import { Dispatch, SetStateAction } from "react";
+import Image from "next/image";
 import { Mail, MessageCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -33,17 +34,23 @@ export function LoginOptions({
   return (
     <div className="flex w-full flex-col gap-10 sm:gap-12 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(20rem,24rem)] lg:items-center lg:gap-16">
       <div className="flex flex-col items-center space-y-5 sm:space-y-6 lg:items-start lg:space-y-7">
-        <div className="relative flex h-36 w-36 items-center justify-center transition-all duration-500 hover:scale-105 sm:h-44 sm:w-44 lg:h-64 lg:w-64">
+        <div
+          className="relative flex h-36 w-36 items-center justify-center transition-all duration-500 hover:scale-105 sm:h-44 sm:w-44 lg:h-64 lg:w-64"
+          aria-label="Ducky 캐릭터"
+        >
           {[1, 2, 3, 4, 5, 6, 7].map((num) => (
-            <img
+            <Image
               key={num}
               src={`/images/splash${num}.png`}
-              alt="Ducky Scholar Character"
+              alt=""
+              fill
+              sizes="(max-width: 640px) 9rem, (max-width: 1024px) 11rem, 16rem"
               className={`absolute inset-0 h-full w-full object-contain transition-all duration-1000 ease-in-out ${
                 currentSplash === num
                   ? "opacity-100 scale-100 z-10"
                   : "opacity-0 scale-95 z-0 pointer-events-none"
               }`}
+              aria-hidden="true"
             />
           ))}
         </div>
