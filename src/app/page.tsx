@@ -320,16 +320,6 @@ export default function LandingPage() {
           </>
         )}
       </div>
-
-      <div className="hidden pointer-events-none absolute w-0 h-0 overflow-hidden">
-        <img src="/images/splash1.png" alt="preload" />
-        <img src="/images/splash2.png" alt="preload" />
-        <img src="/images/splash3.png" alt="preload" />
-        <img src="/images/splash4.png" alt="preload" />
-        <img src="/images/splash5.png" alt="preload" />
-        <img src="/images/splash6.png" alt="preload" />
-        <img src="/images/splash7.png" alt="preload" />
-      </div>
     </div>
   );
 }

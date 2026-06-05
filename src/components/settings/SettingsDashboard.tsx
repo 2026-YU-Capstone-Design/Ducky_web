@@ -10,6 +10,7 @@ import {
   UserRound,
   type LucideIcon,
 } from "lucide-react";
+import { MaterialLibraryMock } from "@/components/settings/MaterialLibraryMock";
 import { Card, CardContent } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { mockUser } from "@/data/mockUser";
@@ -218,6 +219,8 @@ export function SettingsDashboard() {
             </Link>
           </CardContent>
         </Card>
+
+        <MaterialLibraryMock />
       </div>
     </section>
   );
