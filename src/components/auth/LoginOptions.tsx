@@ -65,7 +65,7 @@ export function LoginOptions({
         <Button
           onClick={() => setEmailMode("login")}
           disabled={isLoading}
-          className="h-auto min-h-13 w-full whitespace-normal rounded-xl bg-[#EFECE5] px-4 py-3 text-center text-base font-bold leading-tight text-[#333333] shadow-none transition-transform hover:bg-[#E5E1D8] active:scale-[0.99] disabled:opacity-50"
+          className="h-auto min-h-13 w-full whitespace-normal rounded-xl bg-[#EFECE5] px-4 py-3 text-center text-base font-bold leading-tight text-[#333333] shadow-none transition-transform hover:bg-[#E5E1D8] active:scale-[0.99] disabled:opacity-50 cursor-pointer"
         >
           <Mail className="h-5 w-5 text-[#333333]" />
           이메일로 로그인
@@ -73,7 +73,7 @@ export function LoginOptions({
         <Button
           onClick={() => handleSocialLogin("kakao")}
           disabled={isLoading}
-          className="h-auto min-h-13 w-full whitespace-normal rounded-xl bg-[#FFE600] px-4 py-3 text-center text-base font-bold leading-tight text-[#191919] shadow-none transition-transform hover:bg-[#F2DA00] active:scale-[0.99] disabled:opacity-50"
+          className="h-auto min-h-13 w-full whitespace-normal rounded-xl bg-[#FFE600] px-4 py-3 text-center text-base font-bold leading-tight text-[#191919] shadow-none transition-transform hover:bg-[#F2DA00] active:scale-[0.99] disabled:opacity-50 cursor-pointer"
         >
           {isLoading ? (
             <Loader2 className="h-5 w-5 animate-spin" />
@@ -85,7 +85,7 @@ export function LoginOptions({
         <Button
           onClick={() => handleSocialLogin("naver")}
           disabled={isLoading}
-          className="h-auto min-h-13 w-full whitespace-normal rounded-xl bg-[#03C75A] px-4 py-3 text-center text-base font-bold leading-tight text-white shadow-none transition-transform hover:bg-[#02B350] active:scale-[0.99] disabled:opacity-50"
+          className="h-auto min-h-13 w-full whitespace-normal rounded-xl bg-[#03C75A] px-4 py-3 text-center text-base font-bold leading-tight text-white shadow-none transition-transform hover:bg-[#02B350] active:scale-[0.99] disabled:opacity-50 cursor-pointer"
         >
           {isLoading ? (
             <Loader2 className="h-5 w-5 animate-spin" />
