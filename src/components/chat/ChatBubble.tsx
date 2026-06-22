@@ -56,7 +56,7 @@ export function ChatBubble({ message }: ChatBubbleProps) {
           className={cn(
             "rounded-[14px] px-[15px] py-[11px] text-[13.5px] leading-relaxed break-keep break-words whitespace-pre-wrap",
             isUser
-              ? "rounded-br-[4px] bg-[#6B6356] text-[#F7F2E4]"
+              ? "rounded-br-[4px] border border-[#F0E0A8] bg-[#FFF9E8] text-[#3D2E0A] dark:border-white/10 dark:bg-[#2A2310] dark:text-[#F0E0C4]"
               : "rounded-bl-[4px] border border-[#F0E0A8] bg-white text-[#3D2E0A] dark:border-white/10 dark:bg-[#211C12] dark:text-[#F0E0C4]",
             isHint &&
               "border-2 border-[#FECA43] bg-[#FFE9A0] dark:border-[#FECA43] dark:bg-[#46350F]",
@@ -71,19 +71,14 @@ export function ChatBubble({ message }: ChatBubbleProps) {
                   key={attachment.id}
                   className={cn(
                     "flex min-w-0 items-center gap-2 rounded-lg px-3 py-2 text-xs",
-                    isUser ? "bg-white/10" : "bg-[#FFFCF3] dark:bg-[#1F1A09]",
+                    isUser ? "bg-[#F0E4C8]" : "bg-[#FFFCF3] dark:bg-[#1F1A09]",
                   )}
                 >
                   <FileText className="size-4 shrink-0" aria-hidden="true" />
                   <span className="min-w-0 flex-1 truncate">
                     {attachment.name}
                   </span>
-                  <span
-                    className={cn(
-                      "shrink-0",
-                      isUser ? "text-white/60" : "text-[#8A6A28]",
-                    )}
-                  >
+                  <span className="shrink-0 text-[#8A6A28]">
                     {attachment.sizeLabel}
                   </span>
                 </div>
