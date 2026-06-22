@@ -158,7 +158,7 @@ function SessionRow({ session }: { session: Session }) {
 
 export function HomeDashboard() {
   return (
-    <section className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-5 py-10 sm:px-8 lg:px-10">
+    <section className="mx-auto flex w-full max-w-7xl flex-1 flex-col bg-[#FFFCF3] px-5 py-10 transition-colors dark:bg-[#16130A] sm:px-8 lg:px-10">
       <div className="relative overflow-hidden rounded-3xl border border-amber-100/80 bg-gradient-to-br from-amber-50 via-white to-yellow-50 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_-12px_rgba(217,119,6,0.15)] dark:border-amber-900/30 dark:from-[#1E1B16] dark:via-[#1A1714] dark:to-[#1E1B10] dark:shadow-none">
         {/* 장식 blur */}
         <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-amber-200/40 blur-3xl dark:bg-amber-600/10" />
