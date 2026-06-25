@@ -6,6 +6,9 @@ import { onboardingQuestions } from "@/data/onboardingQuestions";
 import { QuestionCard } from "./QuestionCard";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { Comfortaa } from "next/font/google";
+import { ArrowRight, Clock, Layers, ListChecks } from "lucide-react";
+import { DuckyMark } from "@/components/layout/DuckyMark";
+import { DuckyWordmark } from "@/components/layout/DuckyWordmark";
 
 const comfortaa = Comfortaa({
   subsets: ["latin"],
@@ -112,10 +115,10 @@ export function OnboardingFlow() {
     }
 
     setShowResult(true);
-    setTimeout(() => router.push("/dashboard"), 3800);
+    setTimeout(() => router.push("/dashboard"), 4000);
   };
 
-  // ─── RESULT ──────────────────────────────────────────────────────────────────
+  // ─── RESULT ────────────────────────────────────────────────────────────────
   if (showResult && resultData) {
     const items = [
       { label: "정보 처리", value: resultData.processingStyle },
@@ -125,55 +128,56 @@ export function OnboardingFlow() {
 
     return (
       <div
-        className={`relative flex min-h-dvh w-full flex-col items-center justify-center overflow-hidden bg-[#FECA43] px-6 ${comfortaa.className}`}
+        className={`relative flex min-h-dvh w-full flex-col items-center justify-center overflow-hidden bg-[#FFFCF3] px-6 transition-colors dark:bg-[#2E2A22] ${comfortaa.className}`}
       >
-        <div className="pointer-events-none absolute -top-40 -right-40 h-96 w-96 rounded-full bg-white/10" />
-        <div className="pointer-events-none absolute -bottom-28 -left-28 h-72 w-72 rounded-full bg-white/10" />
-        <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-white/[0.03]" />
+        <div className="pointer-events-none absolute -top-40 -right-40 h-96 w-96 rounded-full bg-amber-200/30 dark:bg-[#FECA43]/10" />
+        <div className="pointer-events-none absolute -bottom-28 -left-28 h-72 w-72 rounded-full bg-amber-100/40 dark:bg-[#FECA43]/5" />
+        <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-amber-50/60 dark:bg-[#FECA43]/[0.03]" />
 
         <div className="relative z-10 w-full max-w-sm">
-          {/* 타이틀 */}
-          <p className="mb-2 text-center text-[11px] font-bold uppercase tracking-[0.3em] text-white/50">
+          <p className="mb-2 text-center text-[11px] font-bold uppercase tracking-[0.3em] text-amber-400/70 dark:text-white/30">
             Analysis Complete
           </p>
-          <h1 className="mb-2 text-center text-[2.75rem] font-bold leading-tight text-white tracking-tight">
+          <h1 className="mb-2 text-center text-[2.75rem] font-bold leading-tight tracking-tight text-gray-950 dark:text-white">
             분석 완료
+            <span className="text-amber-400 dark:text-[#FECA43]">.</span>
           </h1>
-          <p className="mb-10 text-center text-[13px] font-medium text-white/60">
+          <p className="mb-10 text-center text-[13px] font-medium text-[#b8975c] dark:text-white/40">
             당신에게 맞는 학습 방식을 찾았어요
           </p>
 
-          {/* 결과 카드 */}
-          <div className="w-full overflow-hidden rounded-3xl bg-white/20 backdrop-blur-xl ring-1 ring-white/30 shadow-2xl shadow-black/10">
+          <div className="w-full overflow-hidden rounded-2xl border border-amber-200/60 bg-amber-100 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_-8px_rgba(217,119,6,0.12)] dark:border-white/10 dark:bg-white/[0.07]">
             {items.map((item, i) => (
               <div key={item.label}>
-                <div className="flex items-center justify-between px-7 py-[1.35rem]">
-                  <p className="text-sm font-semibold text-white/75">
-                    {item.label}
-                  </p>
-                  <p className="text-[15px] font-bold text-white tracking-wide">
+                <div className="flex items-center justify-between px-6 py-[1.2rem]">
+                  <div className="flex items-center gap-2.5">
+                    <div className="h-3.5 w-[3px] rounded-full bg-amber-400/60 dark:bg-[#FECA43]/50" />
+                    <p className="text-[11px] font-semibold uppercase tracking-widest text-amber-700/50 dark:text-white/35">
+                      {item.label}
+                    </p>
+                  </div>
+                  <p className="text-[15px] font-black tracking-tight text-gray-950 dark:text-white">
                     {item.value}
                   </p>
                 </div>
                 {i < items.length - 1 && (
-                  <div className="mx-7 h-px bg-white/15" />
+                  <div className="mx-6 h-px bg-amber-200/50 dark:bg-white/[0.08]" />
                 )}
               </div>
             ))}
           </div>
 
-          {/* 하단 로딩 */}
           <div className="mt-10 flex flex-col items-center gap-3">
             <div className="flex gap-1.5">
               {[0, 1, 2].map((i) => (
                 <div
                   key={i}
-                  className="h-1.5 w-1.5 rounded-full bg-white/60 animate-bounce"
+                  className="h-1.5 w-1.5 animate-bounce rounded-full bg-amber-400 dark:bg-[#FECA43]/60"
                   style={{ animationDelay: `${i * 160}ms` }}
                 />
               ))}
             </div>
-            <p className="text-[13px] font-medium text-white/65">
+            <p className="text-[13px] font-medium text-[#b8975c] dark:text-white/30">
               맞춤 학습 환경을 준비하고 있어요
             </p>
           </div>
@@ -182,84 +186,85 @@ export function OnboardingFlow() {
     );
   }
 
-  // ─── INTRO ───────────────────────────────────────────────────────────────────
+  // ─── INTRO ─────────────────────────────────────────────────────────────────
   if (step === "intro") {
     return (
-      <div className="relative flex min-h-dvh w-full flex-col items-center overflow-hidden bg-[#FAF8F5]">
-        {/* 상단 노란 배경 */}
-        <div className="absolute inset-x-0 top-0 h-[44%] bg-[#FECA43]">
-          <svg
-            viewBox="0 0 1440 64"
-            preserveAspectRatio="none"
-            className="absolute bottom-0 left-0 right-0 block h-12 w-full sm:h-16"
-          >
-            <path
-              d="M0,0 C480,64 960,64 1440,0 L1440,64 L0,64 Z"
-              fill="#FAF8F5"
-            />
-          </svg>
-        </div>
+      <div className="relative flex min-h-dvh w-full flex-col items-center justify-center overflow-hidden bg-[#FFFCF3] px-6 py-16 transition-colors dark:bg-[#16130A]">
+        <div className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-amber-100/60 dark:bg-amber-900/10" />
+        <div className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-[#fef3c7]/60 dark:bg-amber-900/5" />
 
-        <div className="relative z-10 flex min-h-dvh w-full max-w-md flex-col items-center px-6">
+        <div className="relative z-10 flex w-full max-w-sm flex-col items-center">
           {/* 로고 */}
-          <div className="flex flex-col items-center pt-16 sm:pt-24">
-            <h1
-              className={`text-[5.3rem] font-bold leading-none text-white ${comfortaa.className} select-none tracking-tight drop-shadow-sm`}
-            >
-              Ducky
-            </h1>
+          <div className="mb-10 flex items-center gap-2.5">
+            <DuckyMark size={30} className="shrink-0" />
+            <DuckyWordmark />
           </div>
 
-          {/* 카드 */}
-          <div className="mt-12 w-full rounded-3xl bg-white p-7 shadow-2xl shadow-black/[0.07] ring-1 ring-black/[0.04]">
-            <p className="mb-1 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-[#FECA43]">
-              Learning Style Test
-            </p>
-            <h2 className="mb-3.5 text-center text-[1.4rem] font-bold text-gray-900 tracking-tight">
-              학습 유형 검사
-            </h2>
-            <p className="mb-6 text-center text-[14.5px] leading-relaxed text-gray-500 break-keep">
-              Ducky는 더 적절한 학습 방식을 제공하기 위해
-              <br />
-              학습 유형 검사를 통해 유형을 파악해요.
-            </p>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-100 px-2.5 py-1 mb-3 text-[10px] font-bold tracking-[0.12em] text-amber-700 uppercase dark:bg-amber-900/40 dark:text-amber-300">
+            <span className="size-1.5 rounded-full bg-amber-400 animate-pulse" />
+            Learning Style Test
+          </span>
 
-            {/* 메타 정보 */}
-            <div className="flex items-center border-t border-gray-100 pt-5">
-              {[
-                {
-                  label: "문항 수",
-                  value: `${onboardingQuestions.length}문항`,
-                },
-                { label: "소요 시간", value: "약 3분" },
-                { label: "분석 항목", value: "3가지" },
-              ].map((meta, i, arr) => (
-                <div key={meta.label} className="flex flex-1 items-center">
-                  <div className="flex flex-1 flex-col items-center">
-                    <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400">
-                      {meta.label}
-                    </p>
-                    <p className="mt-1 text-sm font-bold text-gray-800">
-                      {meta.value}
-                    </p>
-                  </div>
-                  {i < arr.length - 1 && (
-                    <div className="h-7 w-px shrink-0 bg-gray-200" />
-                  )}
+          {/* 타이틀 */}
+          <h1
+            className={`mt-3 text-center text-[30px] font-black leading-[1.15] tracking-[-1px] text-gray-950 dark:text-white sm:text-[38px] ${comfortaa.className}`}
+          >
+            학습 유형 검사<span className="text-amber-400">.</span>
+          </h1>
+
+          {/* 서브텍스트 */}
+          <p className="mt-4 text-center text-[13px] font-medium leading-relaxed text-[#b8975c] dark:text-amber-400/70">
+            Ducky는 더 적절한 학습 방식을 제공하기 위해
+            <br />
+            학습 유형 검사를 통해 유형을 파악해요.
+          </p>
+
+          {/* 구분선 */}
+          <div className="mt-5 flex w-full items-center justify-between gap-4">
+            <div className="flex-1 border-t border-amber-200/60 dark:border-amber-800/40" />
+            <div className="flex-1 border-t border-amber-200/60 dark:border-amber-800/40" />
+          </div>
+
+          {/* 스펙 카드  */}
+          <div className="mt-6 grid w-full grid-cols-3 gap-3">
+            {[
+              {
+                label: "문항 수",
+                value: `${onboardingQuestions.length}개`,
+                icon: ListChecks,
+              },
+              { label: "소요 시간", value: "3분", icon: Clock },
+              { label: "분석 항목", value: "3가지", icon: Layers },
+            ].map(({ label, value, icon: Icon }) => (
+              <div
+                key={label}
+                className="relative overflow-hidden rounded-2xl border border-amber-200/40 bg-[#fef3c7] p-4 dark:border-white/8 dark:bg-[#1E1B16]"
+              >
+                <Icon
+                  className="absolute right-3 top-3 size-3.5 text-amber-700/20 dark:text-amber-200/15"
+                  strokeWidth={2}
+                />
+                <div className="pt-5">
+                  <p className="text-[22px] font-black leading-none tracking-tight text-amber-900 dark:text-white tabular-nums">
+                    {value}
+                  </p>
+                  <p className="mt-1.5 text-[10px] font-semibold text-amber-800/50 dark:text-gray-400">
+                    {label}
+                  </p>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
 
           {/* 버튼 */}
-          <div className="mt-8 flex w-full flex-col gap-2.5 pb-6">
+          <div className="mt-8 w-full space-y-3">
             <button
               onClick={() => setStep("questions")}
-              className="w-full rounded-2xl bg-[#FECA43] py-[1.05rem] text-[15px] font-bold text-white shadow-lg shadow-[#FECA43]/30 transition-all duration-200 hover:bg-[#F5B522] hover:-translate-y-[2px] hover:shadow-xl hover:shadow-[#FECA43]/35 active:scale-[0.98] active:translate-y-0 cursor-pointer"
+              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#FECA43] py-4 text-[15px] font-black tracking-tight text-[#2E2A22] transition-all duration-150 hover:bg-[#f0b800] hover:-translate-y-[1px] active:scale-[0.98] cursor-pointer dark:bg-[#FECA43] dark:text-[#2E2A22] dark:hover:bg-[#f0b800]"
             >
               진단하기
+              <ArrowRight className="size-4" strokeWidth={2.5} />
             </button>
-
             <button
               onClick={() => {
                 if (user) {
@@ -275,13 +280,13 @@ export function OnboardingFlow() {
                 }
                 router.push("/dashboard");
               }}
-              className="w-full py-3 text-[13px] font-medium text-gray-400 transition-colors hover:text-gray-600 cursor-pointer"
+              className="w-full py-2.5 text-[13px] font-medium text-[#c4ad88] transition-colors hover:text-gray-600 cursor-pointer dark:text-amber-400/40 dark:hover:text-amber-400/70"
             >
               건너뛰기
             </button>
           </div>
 
-          <p className="pb-8 text-center text-[11px] leading-relaxed text-gray-400 break-keep">
+          <p className="mt-5 text-center text-[11px] leading-relaxed text-[#c4ad88]/60 break-keep dark:text-amber-400/25">
             ※ Ducky의 진단 검사만으로는 실제 학습 유형을 알 수 없어요.
           </p>
         </div>
@@ -289,9 +294,9 @@ export function OnboardingFlow() {
     );
   }
 
-  // ─── QUESTIONS ───────────────────────────────────────────────────────────────
+  // ─── QUESTIONS ─────────────────────────────────────────────────────────────
   return (
-    <div className="flex min-h-dvh w-full flex-col items-center justify-center overflow-y-auto bg-[#FAF8F5] px-4 py-6 sm:px-6">
+    <div className="flex min-h-dvh w-full flex-col items-center justify-center overflow-y-auto bg-[#FFFCF3] px-4 py-6 transition-colors dark:bg-[#16130A] sm:px-6">
       <QuestionCard
         question={onboardingQuestions[currentIndex]}
         totalQuestions={onboardingQuestions.length}
