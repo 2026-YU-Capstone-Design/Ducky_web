@@ -24,9 +24,13 @@ import { EmailLogin } from "@/components/auth/EmailLogin";
 export default function LandingPage() {
   const router = useRouter();
   const [phase, setPhase] = useState<1 | 2 | 3>(1);
-  const [emailMode, setEmailMode] = useState<"options" | "login" | "signup">("options");
+  const [emailMode, setEmailMode] = useState<"options" | "login" | "signup">(
+    "options",
+  );
   const [signupStep, setSignupStep] = useState<1 | 2 | 3>(1);
-  const [showTerms, setShowTerms] = useState<"service" | "marketing" | null>(null);
+  const [showTerms, setShowTerms] = useState<"service" | "marketing" | null>(
+    null,
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [currentSplash, setCurrentSplash] = useState(1);
   const [error, setError] = useState("");
@@ -39,9 +43,9 @@ export default function LandingPage() {
     learningStyle: {
       processing: "active" as "active" | "reflective",
       expression: "visual" as "visual" | "verbal",
-      understanding: "sequential" as "sequential" | "global"
+      understanding: "sequential" as "sequential" | "global",
     },
-    onboarded: false
+    onboarded: false,
   });
 
   // 회원가입 상태 관리
@@ -91,7 +95,7 @@ export default function LandingPage() {
     // API 로그인 시뮬레이션
     setTimeout(() => {
       setIsLoading(false);
-      setUser(prev => ({
+      setUser((prev) => ({
         ...prev,
         id: `mock-${platform}-user`,
         name: platform === "kakao" ? "카카오 유저" : "네이버 유저",
@@ -108,11 +112,11 @@ export default function LandingPage() {
     }
     setIsLoading(true);
     setError("");
-    
+
     // 이메일 로그인 시뮬레이션
     setTimeout(() => {
       setIsLoading(false);
-      setUser(prev => ({
+      setUser((prev) => ({
         ...prev,
         id: "mock-email-user",
         name: email.split("@")[0],
@@ -126,11 +130,11 @@ export default function LandingPage() {
     // 회원가입 시뮬레이션
     setTimeout(() => {
       setIsLoading(false);
-      setUser(prev => ({
+      setUser((prev) => ({
         ...prev,
         id: "mock-email-user",
         name: name,
-        onboarded: false
+        onboarded: false,
       }));
       router.push("/onboarding");
     }, 1500);
@@ -155,7 +159,7 @@ export default function LandingPage() {
     setIsCheckingEmail(true);
     setEmailSuccess("");
     setEmailError("");
-    
+
     setTimeout(() => {
       setIsCheckingEmail(false);
       if (email === "exist@ducky.com" || email === "test@test.com") {
@@ -172,19 +176,28 @@ export default function LandingPage() {
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setPassword(val);
-    if (val.length > 0 && !/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#&*])[a-zA-Z\d!@#&*]{8,16}$/.test(val)) {
+    if (
+      val.length > 0 &&
+      !/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#&*])[a-zA-Z\d!@#&*]{8,16}$/.test(val)
+    ) {
       setPasswordError("비밀번호 형식이 올바르지 않습니다.");
     } else {
       setPasswordError("");
     }
-    
+
     if (passwordConfirm.length > 0) {
       if (val !== passwordConfirm) {
         setPasswordConfirmError("비밀번호가 일치하지 않습니다.");
         setPasswordConfirmSuccess("");
       } else {
         setPasswordConfirmError("");
-        if (val.length > 0 && (!passwordError || /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#&*])[a-zA-Z\d!@#&*]{8,16}$/.test(val))) {
+        if (
+          val.length > 0 &&
+          (!passwordError ||
+            /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#&*])[a-zA-Z\d!@#&*]{8,16}$/.test(
+              val,
+            ))
+        ) {
           setPasswordConfirmSuccess("비밀번호가 일치합니다.");
         }
       }
@@ -192,7 +205,9 @@ export default function LandingPage() {
   };
 
   // 회원가입 - 비밀번호 확인 입력 핸들러
-  const handlePasswordConfirmChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordConfirmChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const val = e.target.value;
     setPasswordConfirm(val);
     if (val.length > 0) {
@@ -214,9 +229,13 @@ export default function LandingPage() {
   // 1단계: 순수 스플래시 화면 (선명한 옐로우 배경 #FECA43)
   if (phase === 1) {
     return (
-      <div className={`flex min-h-dvh w-full flex-col items-center justify-center bg-[#FECA43] px-6 text-white ${comfortaa.className} transition-all duration-700`}>
+      <div
+        className={`flex min-h-dvh w-full flex-col items-center justify-center bg-[#FECA43] px-6 text-white ${comfortaa.className} transition-all duration-700`}
+      >
         <div className="flex flex-col items-center space-y-4">
-          <h1 className="text-[clamp(3rem,13vw,5rem)] font-bold tracking-tight select-none">Ducky</h1>
+          <h1 className="text-[clamp(3rem,13vw,5rem)] font-bold tracking-tight select-none">
+            Ducky
+          </h1>
         </div>
       </div>
     );
@@ -225,9 +244,13 @@ export default function LandingPage() {
   // 2단계: 은은한 크림 베이지 배경 및 옐로우 로고 스플래시 (배경: #FAF8F5, 로고: #FECA43)
   if (phase === 2) {
     return (
-      <div className={`flex min-h-dvh w-full flex-col items-center justify-center bg-[#FAF8F5] px-6 text-[#FECA43] ${comfortaa.className} transition-all duration-700`}>
+      <div
+        className={`flex min-h-dvh w-full flex-col items-center justify-center bg-[#FAF8F5] px-6 text-[#FECA43] ${comfortaa.className} transition-all duration-700`}
+      >
         <div className="flex flex-col items-center space-y-2">
-          <h1 className="text-[clamp(3rem,13vw,5rem)] font-bold tracking-tight select-none">Ducky</h1>
+          <h1 className="text-[clamp(3rem,13vw,5rem)] font-bold tracking-tight select-none">
+            Ducky
+          </h1>
         </div>
       </div>
     );
@@ -235,18 +258,23 @@ export default function LandingPage() {
 
   // 3단계: 메인 로그인 화면
   return (
-    <div className={`flex min-h-dvh w-full flex-col overflow-y-auto bg-[#FAF8F5] px-4 py-6 font-sans transition-all duration-500 sm:px-6 lg:px-10 ${
-      emailMode === "options"
-        ? "items-center justify-center"
-        : "items-center justify-start sm:justify-center"
-    }`}>
-      <div className={`relative flex w-full flex-col animate-fade-in duration-500 ${
-        emailMode === "options" ? "max-w-5xl" : "min-h-[calc(100dvh-3rem)] max-w-md sm:min-h-[520px] sm:max-w-lg"
-      }`}>
-        
+    <div
+      className={`flex min-h-dvh w-full flex-col overflow-y-auto bg-[#FFFCF3] px-4 py-6 font-sans transition-all duration-500 sm:px-6 lg:px-10 ${
+        emailMode === "options"
+          ? "items-center justify-center"
+          : "items-center justify-start sm:justify-center"
+      }`}
+    >
+      <div
+        className={`relative flex w-full flex-col animate-fade-in duration-500 ${
+          emailMode === "options"
+            ? "max-w-5xl"
+            : "min-h-[calc(100dvh-3rem)] max-w-md sm:min-h-[520px] sm:max-w-lg"
+        }`}
+      >
         {/* Render Terms Modal overlay */}
         <TermsModal showTerms={showTerms} setShowTerms={setShowTerms} />
-        
+
         {/* 옵션 화면 */}
         {emailMode === "options" && (
           <LoginOptions
