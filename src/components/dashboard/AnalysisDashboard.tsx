@@ -61,28 +61,32 @@ function HintUsageBars() {
   });
 
   return (
-    <div className="flex h-full flex-col divide-y divide-[#f0e4cc]">
+    <div className="flex h-full flex-col divide-y divide-[#f0e4cc] dark:divide-white/10">
       {hints.map((hint, i) => (
         <div
           key={hint.level}
           className="flex flex-1 items-center justify-between gap-2"
         >
           <div>
-            <span className="text-sm font-bold text-gray-900">
+            <span className="text-sm font-bold text-gray-900 dark:text-white">
               Lv.{hint.level}
             </span>
-            <span className="ml-1.5 text-xs text-[#c4ad88]">{hint.label}</span>
+            <span className="ml-1.5 text-xs text-[#c4ad88] dark:text-gray-400">
+              {hint.label}
+            </span>
           </div>
           <div className="flex items-baseline gap-0.5 shrink-0">
             <span
               className={cn(
-                "font-black leading-none tabular-nums text-amber-900 tracking-tight",
+                "font-black leading-none tabular-nums tracking-tight text-amber-900 dark:text-amber-300",
                 sizeMap[i],
               )}
             >
               {hint.count}
             </span>
-            <span className="text-xs font-semibold text-[#ddd0b8]">회</span>
+            <span className="text-xs font-semibold text-[#ddd0b8] dark:text-gray-500">
+              회
+            </span>
           </div>
         </div>
       ))}
@@ -95,29 +99,29 @@ function TopicProgressList() {
     (a, b) => b.progress - a.progress,
   );
   return (
-    <div className="divide-y divide-[#f5e8cc]">
+    <div className="divide-y divide-[#f5e8cc] dark:divide-white/10">
       {sorted.map((topic) => (
         <div
           key={topic.topic}
           className="flex items-center gap-4 py-3 first:pt-0 last:pb-0"
         >
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-bold text-gray-900 truncate">
+            <p className="text-sm font-bold text-gray-900 truncate dark:text-white">
               {topic.topic}
             </p>
-            <p className="mt-0.5 text-[11px] text-[#c4ad88]">
+            <p className="mt-0.5 text-[11px] text-[#c4ad88] dark:text-gray-400">
               {topic.completedSessions}/{topic.totalSessions}개 ·{" "}
               {formatDate(topic.lastPracticedAt)}
             </p>
           </div>
           <div className="flex w-28 shrink-0 items-center gap-2">
-            <div className="h-[5px] flex-1 overflow-hidden rounded-full bg-[#f5e8cc]">
+            <div className="h-[5px] flex-1 overflow-hidden rounded-full bg-[#f5e8cc] dark:bg-white/10">
               <div
                 className="h-full rounded-full bg-amber-400"
                 style={{ width: `${topic.progress}%` }}
               />
             </div>
-            <span className="w-8 text-right text-xs font-bold tabular-nums text-gray-900">
+            <span className="w-8 text-right text-xs font-bold tabular-nums text-gray-900 dark:text-white">
               {topic.progress}%
             </span>
           </div>
@@ -140,18 +144,20 @@ function ImprovementTimeline() {
             <span
               className={cn(
                 "size-2 shrink-0 rounded-full",
-                point.priority === "high" ? "bg-amber-500" : "bg-[#e8dcc8]",
+                point.priority === "high"
+                  ? "bg-amber-500"
+                  : "bg-[#e8dcc8] dark:bg-white/15",
               )}
             />
             {i < sorted.length - 1 && (
-              <span className="mt-1.5 w-px flex-1 bg-[#f0e4cc]" />
+              <span className="mt-1.5 w-px flex-1 bg-[#f0e4cc] dark:bg-white/10" />
             )}
           </div>
           <div className="min-w-0 flex-1">
-            <h3 className="text-sm font-bold leading-snug text-gray-900 break-keep">
+            <h3 className="text-sm font-bold leading-snug text-gray-900 break-keep dark:text-white">
               {point.title}
             </h3>
-            <p className="mt-1 text-xs leading-relaxed text-gray-500 break-keep">
+            <p className="mt-1 text-xs leading-relaxed text-gray-500 break-keep dark:text-gray-400">
               {point.description}
             </p>
           </div>
@@ -161,7 +167,7 @@ function ImprovementTimeline() {
                 {priorityLabels[point.priority]}
               </span>
             ) : (
-              <span className="text-[10px] font-medium text-[#c4ad88]">
+              <span className="text-[10px] font-medium text-[#c4ad88] dark:text-gray-500">
                 {priorityLabels[point.priority]}
               </span>
             )}
@@ -174,23 +180,23 @@ function ImprovementTimeline() {
 
 function TopicDetailList() {
   return (
-    <div className="divide-y divide-[#f0e4cc]">
+    <div className="divide-y divide-[#f0e4cc] dark:divide-white/10">
       {mockAnalysis.topicProgress.map((topic) => (
         <div
           key={topic.topic}
           className="grid gap-3 py-3 first:pt-0 last:pb-0 sm:grid-cols-[minmax(0,1fr)_5rem]"
         >
           <div className="min-w-0">
-            <p className="text-sm font-bold text-gray-900">{topic.topic}</p>
-            <p className="mt-0.5 text-xs text-[#c4ad88]">
+            <p className="text-sm font-bold text-gray-900 dark:text-white">{topic.topic}</p>
+            <p className="mt-0.5 text-xs text-[#c4ad88] dark:text-gray-400">
               최근 {formatDate(topic.lastPracticedAt)}
             </p>
           </div>
           <div className="sm:text-right">
-            <p className="text-base font-bold tabular-nums text-gray-900">
+            <p className="text-base font-bold tabular-nums text-gray-900 dark:text-white">
               {topic.progress}%
             </p>
-            <p className="text-xs text-[#c4ad88]">
+            <p className="text-xs text-[#c4ad88] dark:text-gray-400">
               {topic.completedSessions}개 완료
             </p>
           </div>
@@ -205,8 +211,8 @@ function LearningPointsCard() {
 
   return (
     <>
-      <div className="flex items-center justify-between bg-white px-4 border-b border-[#f0e4cc]">
-        <h2 className="py-3 text-xs font-bold text-gray-900">
+      <div className="flex items-center justify-between border-b border-[#f0e4cc] bg-white px-4 dark:border-white/8 dark:bg-[#1A1714]">
+        <h2 className="py-3 text-xs font-bold text-gray-900 dark:text-white">
           다음 학습 포인트
         </h2>
         <div className="flex items-stretch">
@@ -222,8 +228,8 @@ function LearningPointsCard() {
               className={cn(
                 "relative px-3 py-3 text-[11px] font-semibold transition-colors",
                 tab === id
-                  ? "text-amber-700 font-bold"
-                  : "text-[#c4ad88] hover:text-gray-600",
+                  ? "font-bold text-amber-700 dark:text-amber-300"
+                  : "text-[#c4ad88] hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300",
               )}
             >
               {label}
@@ -254,15 +260,15 @@ export function AnalysisDashboard() {
             <span className="size-1.5 rounded-full bg-amber-400 animate-pulse" />
             Learning Analysis Report
           </span>
-          <h1 className="mt-3 text-[30px] font-black tracking-[-1px] text-gray-950 leading-[1.15] sm:text-[40px]">
+          <h1 className="mt-3 text-[30px] font-black leading-[1.15] tracking-[-1px] text-gray-950 dark:text-white sm:text-[40px]">
             지금까지 잘<br className="sm:hidden" /> 달려왔어요
             <span className="text-amber-400">.</span>
           </h1>
           <div className="mt-4 ml-1.5 flex items-center justify-between gap-4">
-            <p className="text-[13px] font-medium text-[#b8975c] leading-relaxed">
+            <p className="text-[13px] font-medium leading-relaxed text-[#b8975c] dark:text-gray-400">
               세션 기록을 바탕으로 강점과 다음 액션을 정리했어요.
             </p>
-            <p className="shrink-0 text-[11px] text-[#c4ad88]">
+            <p className="shrink-0 text-[11px] text-[#c4ad88] dark:text-gray-500">
               {formatDate(mockAnalysis.updatedAt)} 기준
             </p>
           </div>
@@ -270,23 +276,24 @@ export function AnalysisDashboard() {
 
         {/* ── 1행 ── */}
         <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-[1.6fr_1fr_1fr]">
-          <div className="relative overflow-hidden rounded-2xl border border-amber-200/50 bg-gradient-to-br from-amber-50 via-white to-yellow-50/80 p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_-12px_rgba(217,119,6,0.12)]">
-            <div className="pointer-events-none absolute -right-5 -top-5 h-20 w-20 rounded-full bg-amber-200/30 blur-2xl" />
+          <div className="relative overflow-hidden rounded-3xl border border-amber-200/50 bg-gradient-to-br from-amber-50 via-white to-yellow-50/80 p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_-12px_rgba(217,119,6,0.12)] dark:border-amber-900/30 dark:from-[#1E1B16] dark:via-[#1A1714] dark:to-[#1E1B10] dark:shadow-none">
+            <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-amber-200/30 blur-3xl dark:bg-amber-600/10" />
+            <div className="pointer-events-none absolute -bottom-8 left-1/3 h-20 w-20 rounded-full bg-yellow-200/30 blur-2xl dark:bg-yellow-700/10" />
             <div className="relative">
-              <p className="mb-2.5 text-[10px] font-semibold tracking-widest text-amber-600 uppercase">
+              <p className="mb-2.5 text-[10px] font-semibold tracking-widest text-amber-600 uppercase dark:text-amber-400">
                 완료율
               </p>
               <div className="mb-1.5 flex items-baseline gap-1">
-                <span className="text-[52px] font-extrabold leading-none tracking-tight tabular-nums text-gray-950">
+                <span className="text-[52px] font-extrabold leading-none tracking-tight tabular-nums text-gray-950 dark:text-white">
                   {completionRate}
                 </span>
-                <span className="text-xl font-bold text-[#ddd0b8]">%</span>
+                <span className="text-xl font-bold text-[#ddd0b8] dark:text-gray-500">%</span>
               </div>
-              <p className="mb-4 text-xs text-[#c4ad88]">
+              <p className="mb-4 text-xs text-[#c4ad88] dark:text-gray-400">
                 {mockAnalysis.completedSessions}/{mockAnalysis.totalSessions}개
                 세션 완료
               </p>
-              <div className="h-[5px] overflow-hidden rounded-full bg-[#f5e8cc]">
+              <div className="h-[5px] overflow-hidden rounded-full bg-[#f5e8cc] dark:bg-white/10">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-amber-400 to-orange-400"
                   style={{ width: `${completionRate}%` }}
@@ -296,43 +303,43 @@ export function AnalysisDashboard() {
           </div>
 
           <div className="grid grid-cols-2 gap-4 sm:contents">
-            <div className="relative overflow-hidden rounded-2xl border border-transparent bg-[#fef3c7] p-5">
-              <span className="absolute right-4 top-4 text-right text-[11px] font-extrabold leading-[1.4] tracking-[.08em] text-amber-700/30 uppercase">
+            <div className="relative overflow-hidden rounded-2xl border border-amber-200/40 bg-[#fef3c7] p-5 dark:border-white/8 dark:bg-[#1E1B16]">
+              <span className="absolute right-4 top-4 text-right text-[11px] font-extrabold leading-[1.4] tracking-[.08em] text-amber-700/30 uppercase dark:text-amber-200/15">
                 연속
                 <br />
                 학습
               </span>
               <div className="pt-9">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-[52px] font-black leading-none tracking-[-3px] tabular-nums text-amber-900">
+                  <span className="text-[52px] font-black leading-none tracking-[-3px] tabular-nums text-amber-900 dark:text-white">
                     {mockAnalysis.currentStreakDays}
                   </span>
-                  <span className="text-base font-bold text-amber-700/30">
+                  <span className="text-base font-bold text-amber-700/30 dark:text-gray-500">
                     일
                   </span>
                 </div>
-                <p className="mt-2 text-[13px] font-semibold text-amber-800/50">
+                <p className="mt-2 text-[13px] font-semibold text-amber-800/50 dark:text-gray-400">
                   꾸준한 복습 흐름
                 </p>
               </div>
             </div>
 
-            <div className="relative overflow-hidden rounded-2xl border border-transparent bg-[#fef3c7] p-5">
-              <span className="absolute right-4 top-4 text-right text-[11px] font-extrabold leading-[1.4] tracking-[.08em] text-amber-700/30 uppercase">
+            <div className="relative overflow-hidden rounded-2xl border border-amber-200/40 bg-[#fef3c7] p-5 dark:border-white/8 dark:bg-[#1E1B16]">
+              <span className="absolute right-4 top-4 text-right text-[11px] font-extrabold leading-[1.4] tracking-[.08em] text-amber-700/30 uppercase dark:text-amber-200/15">
                 평균
                 <br />
                 힌트
               </span>
               <div className="pt-9">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-[52px] font-black leading-none tracking-[-3px] tabular-nums text-amber-900">
+                  <span className="text-[52px] font-black leading-none tracking-[-3px] tabular-nums text-amber-900 dark:text-white">
                     {mockAnalysis.averageHintCount}
                   </span>
-                  <span className="text-base font-bold text-amber-700/30">
+                  <span className="text-base font-bold text-amber-700/30 dark:text-gray-500">
                     회
                   </span>
                 </div>
-                <p className="mt-2 text-[13px] font-semibold text-amber-800/50">
+                <p className="mt-2 text-[13px] font-semibold text-amber-800/50 dark:text-gray-400">
                   세션당 사용량
                 </p>
               </div>
@@ -342,12 +349,12 @@ export function AnalysisDashboard() {
 
         {/* ── 2행 ── */}
         <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <div className="overflow-hidden rounded-2xl border border-[#e8dcc8] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.03)] sm:col-span-2">
-            <div className="flex h-12 items-center justify-between border-b border-[#ede0c4] bg-gradient-to-r from-amber-50 to-[#fef9ec] px-4">
-              <h2 className="text-xs font-bold text-amber-900">
+          <div className="overflow-hidden rounded-2xl border border-[#e8dcc8] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.03)] sm:col-span-2 dark:border-white/8 dark:bg-[#1E1B16] dark:shadow-none">
+            <div className="flex h-12 items-center justify-between border-b border-[#ede0c4] bg-gradient-to-r from-amber-50 to-[#fef9ec] px-4 dark:border-white/8 dark:from-[#1A1714] dark:to-[#1A1714]">
+              <h2 className="text-xs font-bold text-amber-900 dark:text-white">
                 주제별 진행률
               </h2>
-              <span className="rounded-full border border-amber-300/60 bg-[#fffbeb] px-2.5 py-0.5 text-[11px] font-bold text-amber-700">
+              <span className="rounded-full border border-amber-300/60 bg-[#fffbeb] px-2.5 py-0.5 text-[11px] font-bold text-amber-700 dark:border-amber-800/30 dark:bg-amber-900/20 dark:text-amber-300">
                 {mockAnalysis.completedSessions}/{mockAnalysis.totalSessions}{" "}
                 완료
               </span>
@@ -357,19 +364,19 @@ export function AnalysisDashboard() {
             </div>
           </div>
 
-          <div className="flex flex-col overflow-hidden rounded-2xl border border-[#ede0c4] bg-[#fff8e1] shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-            <div className="flex h-12 items-center gap-1.5 border-b border-[#ede0c4] px-4">
-              <Target className="size-3.5 text-amber-600" strokeWidth={1.8} />
-              <h2 className="text-xs font-bold tracking-widest text-amber-700 uppercase">
+          <div className="flex flex-col overflow-hidden rounded-2xl border border-[#ede0c4] bg-[#fff8e1] shadow-[0_1px_3px_rgba(0,0,0,0.03)] dark:border-white/8 dark:bg-[#1E1B16] dark:shadow-none">
+            <div className="flex h-12 items-center gap-1.5 border-b border-[#ede0c4] px-4 dark:border-white/8 dark:bg-[#1A1714]">
+              <Target className="size-3.5 text-amber-600 dark:text-amber-400" strokeWidth={1.8} />
+              <h2 className="text-xs font-bold tracking-widest text-amber-700 uppercase dark:text-amber-300">
                 다음 목표
               </h2>
             </div>
             <div className="flex flex-1 flex-col items-center justify-center px-5 py-6 text-center">
-              <p className="text-[18px] font-extrabold leading-[1.45] tracking-[-0.2px] text-amber-900 break-keep">
+              <p className="text-[18px] font-extrabold leading-[1.45] tracking-[-0.2px] text-amber-900 break-keep dark:text-white">
                 원인을 설명한 뒤 코드 흐름으로 다시 검증하기
               </p>
-              <div className="my-4 h-px w-full bg-[#ede0c4]" />
-              <p className="text-xs leading-relaxed text-[#b8975c] break-keep">
+              <div className="my-4 h-px w-full bg-[#ede0c4] dark:bg-white/8" />
+              <p className="text-xs leading-relaxed text-[#b8975c] break-keep dark:text-gray-400">
                 높은 우선순위 개선 포인트를 다음 채팅 세션의 질문 흐름에
                 반영합니다.
               </p>
@@ -379,27 +386,27 @@ export function AnalysisDashboard() {
 
         {/* ── 3행 ── */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr]">
-          <div className="overflow-hidden rounded-2xl border border-[#e8dcc8] bg-[#fdfaf3] shadow-[0_1px_3px_rgba(0,0,0,0.03)] sm:col-span-2 lg:col-span-1">
+          <div className="overflow-hidden rounded-2xl border border-[#e8dcc8] bg-[#fdfaf3] shadow-[0_1px_3px_rgba(0,0,0,0.03)] sm:col-span-2 lg:col-span-1 dark:border-white/8 dark:bg-[#1E1B16] dark:shadow-none">
             <LearningPointsCard />
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-[#e8dcc8] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-            <div className="flex items-center justify-between border-b border-[#f5e8cc] px-4 py-3">
-              <h2 className="text-xs font-bold text-gray-900">학습 유형</h2>
-              <Brain className="size-3.5 text-[#e8c86a]" strokeWidth={1.8} />
+          <div className="overflow-hidden rounded-2xl border border-[#e8dcc8] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.03)] dark:border-white/8 dark:bg-[#1E1B16] dark:shadow-none">
+            <div className="flex items-center justify-between border-b border-[#f5e8cc] px-4 py-3 dark:border-white/8 dark:bg-[#1A1714]">
+              <h2 className="text-xs font-bold text-gray-900 dark:text-white">학습 유형</h2>
+              <Brain className="size-3.5 text-[#e8c86a] dark:text-amber-400" strokeWidth={1.8} />
             </div>
-            <dl className="divide-y divide-[#f5e8cc]">
+            <dl className="divide-y divide-[#f5e8cc] dark:divide-white/8">
               {styleRows.map((row) => (
                 <div key={row.label} className="flex gap-3 px-4 py-3">
                   <div className="my-0.5 w-[3px] shrink-0 rounded-full bg-amber-300" />
                   <div className="min-w-0">
-                    <dt className="mb-1 text-[10px] font-semibold tracking-wide text-[#c4ad88] uppercase">
+                    <dt className="mb-1 text-[10px] font-semibold tracking-wide text-[#c4ad88] uppercase dark:text-gray-500">
                       {row.label}
                     </dt>
-                    <dd className="mb-1 text-xs font-bold text-gray-900">
+                    <dd className="mb-1 text-xs font-bold text-gray-900 dark:text-white">
                       {row.value}
                     </dd>
-                    <dd className="text-[11px] leading-relaxed text-gray-500 break-keep">
+                    <dd className="text-[11px] leading-relaxed text-gray-500 break-keep dark:text-gray-400">
                       {row.description}
                     </dd>
                   </div>
@@ -408,15 +415,15 @@ export function AnalysisDashboard() {
             </dl>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border-2 border-[#ede0c4] bg-[#fafaf8]">
-            <div className="flex items-center justify-between border-b border-[#ede0c4] bg-white px-4 py-3">
-              <h2 className="text-xs font-bold text-gray-900">힌트 사용량</h2>
+          <div className="overflow-hidden rounded-2xl border border-[#ede0c4] bg-[#fafaf8] dark:border-white/8 dark:bg-[#1E1B16]">
+            <div className="flex items-center justify-between border-b border-[#ede0c4] bg-white px-4 py-3 dark:border-white/8 dark:bg-[#1A1714]">
+              <h2 className="text-xs font-bold text-gray-900 dark:text-white">힌트 사용량</h2>
               <TrendingUp
-                className="size-3.5 text-[#e8c86a]"
+                className="size-3.5 text-[#e8c86a] dark:text-amber-400"
                 strokeWidth={1.8}
               />
             </div>
-            <div className="flex h-[calc(100%-41px)] flex-col divide-y divide-[#f0e4cc] px-4">
+            <div className="flex h-[calc(100%-41px)] flex-col divide-y divide-[#f0e4cc] px-4 dark:divide-white/8">
               <HintUsageBars />
             </div>
           </div>

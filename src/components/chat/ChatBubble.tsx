@@ -71,14 +71,19 @@ export function ChatBubble({ message }: ChatBubbleProps) {
                   key={attachment.id}
                   className={cn(
                     "flex min-w-0 items-center gap-2 rounded-lg px-3 py-2 text-xs",
-                    isUser ? "bg-[#F0E4C8]" : "bg-[#FFFCF3] dark:bg-[#1F1A09]",
+                    isUser
+                      ? "bg-[#F0E4C8] text-[#5C4413] dark:bg-[#3A2F12] dark:text-[#F0E0C4]"
+                      : "bg-[#FFFCF3] text-[#5C4413] dark:bg-[#1F1A09] dark:text-[#F0E0C4]",
                   )}
                 >
-                  <FileText className="size-4 shrink-0" aria-hidden="true" />
+                  <FileText
+                    className="size-4 shrink-0 text-[#946200] dark:text-[#E8C97A]"
+                    aria-hidden="true"
+                  />
                   <span className="min-w-0 flex-1 truncate">
                     {attachment.name}
                   </span>
-                  <span className="shrink-0 text-[#8A6A28]">
+                  <span className="shrink-0 text-[#8A6A28] dark:text-[#C4A85A]">
                     {attachment.sizeLabel}
                   </span>
                 </div>
