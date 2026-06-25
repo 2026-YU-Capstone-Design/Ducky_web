@@ -86,7 +86,9 @@ export function SettingsDashboard() {
           </div>
         </div>
 
+        {/* ── 그리드 ── */}
         <div className="grid gap-4 lg:grid-cols-2">
+          {/* 왼쪽: 프로필 + 화면설정 + 알림 */}
           <div className="flex flex-col gap-4">
             {/* 프로필 */}
             <div className="overflow-hidden rounded-2xl border border-amber-100/80 bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] dark:border-white/8 dark:bg-[#1E1B16]">
@@ -179,7 +181,7 @@ export function SettingsDashboard() {
             </div>
           </div>
 
-          {/* 학습 스타일 */}
+          {/* 오른쪽: 학습 스타일 */}
           <div className="flex flex-col overflow-hidden rounded-2xl border border-amber-100/80 bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] dark:border-white/8 dark:bg-[#1E1B16]">
             <div className="flex h-12 items-center gap-1.5 border-b border-amber-100/80 px-4 dark:border-white/8">
               <Brain className="size-3.5 text-amber-500" strokeWidth={1.8} />
