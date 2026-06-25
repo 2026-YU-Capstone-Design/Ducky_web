@@ -82,7 +82,7 @@ export function SettingsDashboard() {
               현재는 프로토타입용 mock 설정입니다. 실제 저장은 이후 백엔드 연결
               단계에서 처리합니다.
             </p>
-            <div className="mt-3 border-t border-amber-200/60 dark:border-amber-800/40" />
+            <div className="mt-8 border-t border-amber-200/60 dark:border-amber-800/40" />
           </div>
         </div>
 
