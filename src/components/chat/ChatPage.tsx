@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Bot, Lightbulb } from "lucide-react";
-import { Comfortaa } from "next/font/google";
+import Image from "next/image";
+import { Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
@@ -17,11 +17,6 @@ import { useVoiceInput } from "@/hooks/useVoiceInput";
 import { ChatBubble } from "./ChatBubble";
 import { ChatInput } from "./ChatInput";
 import { HintPanel } from "./HintPanel";
-
-const comfortaa = Comfortaa({
-  subsets: ["latin"],
-  weight: ["700"],
-});
 
 export function ChatPage() {
   const [draft, setDraft] = useState("");
@@ -67,40 +62,36 @@ export function ChatPage() {
   );
 
   return (
-    <div className="flex h-[calc(100dvh-5.75rem)] min-h-0 w-full bg-[#FAF8F5] transition-colors dark:bg-[#171512] md:h-dvh">
+    <div className="flex h-[calc(100dvh-5.75rem)] min-h-0 w-full bg-[#FFFCF3] transition-colors dark:bg-[#16130A] md:h-dvh">
       <div className="flex min-h-0 w-full gap-4 p-0 sm:p-4 lg:p-6">
-        <section className="flex min-w-0 flex-1 flex-col overflow-hidden bg-[#FAF8F5] transition-colors dark:bg-[#171512] sm:rounded-lg sm:border sm:border-[#E7DDC8] sm:bg-white sm:shadow-sm sm:dark:border-white/10 sm:dark:bg-[#201D19] sm:dark:shadow-none">
-          <header className="flex shrink-0 items-center justify-between gap-3 border-b border-[#E7DDC8] bg-[#FAF8F5] px-4 py-3 transition-colors dark:border-white/10 dark:bg-[#201D19] sm:bg-white lg:px-5">
-            <div className="flex min-w-0 items-center gap-3">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-[#FECA43] text-[#2E2A22]">
-                <Bot className="size-5" aria-hidden="true" />
-              </div>
-              <div className="min-w-0">
-                <h1
-                  className={`truncate text-xl font-bold text-[#FECA43] ${comfortaa.className}`}
-                >
-                  Ducky
-                </h1>
-                <p className="truncate text-xs text-gray-500 dark:text-gray-400">
-                  {activeSession.topic} 질문 훈련
-                </p>
-              </div>
-            </div>
+        <section className="flex min-w-0 flex-1 flex-col overflow-hidden bg-[#FFFCF3] transition-colors dark:bg-[#16130A] sm:rounded-2xl sm:border sm:border-[#F0E0A8] sm:shadow-sm sm:dark:border-[#5C4413]/40 sm:dark:shadow-none">
+          <header className="flex shrink-0 items-center justify-between gap-3 border-b border-[#F0E0A8] bg-white px-5 py-4 transition-colors dark:border-[#5C4413]/40 dark:bg-[#221C0D]">
+            <h1 className="min-w-0 truncate text-lg font-bold text-[#3D2E0A] dark:text-[#F0E0C4]">
+              {activeSession.topic} 질문 훈련
+            </h1>
 
-            <Button
-              type="button"
-              onClick={() => setIsHintOpen(true)}
-              className="h-9 gap-2 bg-[#FECA43] px-3 font-bold text-[#2E2A22] hover:bg-[#F5B522] lg:hidden"
-            >
-              <Lightbulb className="size-4" aria-hidden="true" />
-              힌트
-            </Button>
+            <div className="flex shrink-0 items-center gap-3">
+              <span className="text-xs font-semibold whitespace-nowrap text-[#8A6A28] dark:text-[#C4A85A]">
+                메시지 {messages.length}개
+              </span>
+
+              <div className="block h-3.5 w-px bg-[#F0E0A8] lg:hidden dark:bg-[#5C4413]/40" />
+
+              <Button
+                type="button"
+                onClick={() => setIsHintOpen(true)}
+                className="h-9 gap-1.5 rounded-full bg-[#3D2E0A] px-4 text-[13px] font-bold text-[#FFEFC4] hover:bg-[#5C4413] dark:bg-[#FECA43] dark:text-[#3D2E0A] dark:hover:bg-[#F5B522] lg:hidden"
+              >
+                <Lightbulb className="size-4" aria-hidden="true" />
+                힌트
+              </Button>
+            </div>
           </header>
 
           <ScrollArea className="min-h-0 flex-1">
             <div className="space-y-4 px-3 py-5 sm:px-5 lg:px-8">
-              <div className="mx-auto max-w-3xl rounded-lg border border-[#E7DDC8] bg-[#FFF7E0] px-4 py-3 text-sm leading-relaxed text-[#4A4438] break-keep transition-colors dark:border-[#6B5A32] dark:bg-[#2A251D] dark:text-gray-300">
-                <p className="font-bold text-[#6B5200] dark:text-[#FECA43]">
+              <div className="mx-auto max-w-3xl rounded-2xl border border-[#F0E0A8] bg-[#FFF6DC] px-4 py-3 text-sm leading-relaxed text-[#5C4413] break-keep transition-colors dark:border-[#5C4413]/40 dark:bg-[#2A2310] dark:text-[#E8C97A]">
+                <p className="font-bold text-[#3D2E0A] dark:text-[#FECA43]">
                   오늘의 대화 목표
                 </p>
                 <p className="mt-1">
@@ -115,13 +106,20 @@ export function ChatPage() {
 
               {isThinking && (
                 <div className="flex items-end gap-2">
-                  <div className="flex size-8 shrink-0 items-center justify-center rounded-full border border-[#E7DDC8] bg-white text-[#B88700] transition-colors dark:border-white/10 dark:bg-[#24211D]">
-                    <Bot className="size-4" aria-hidden="true" />
+                  <div className="relative size-[30px] shrink-0 overflow-hidden rounded-full bg-[#FECA43]">
+                    <Image
+                      src="/images/splash7.png"
+                      alt="Ducky"
+                      width={30}
+                      height={30}
+                      className="size-full object-cover"
+                    />
                   </div>
-                  <div className="rounded-lg border border-[#E7DDC8] bg-white px-4 py-3 text-sm text-gray-600 shadow-sm transition-colors dark:border-white/10 dark:bg-[#24211D] dark:text-gray-300 dark:shadow-none">
-                    Ducky가 다음 질문을 고르는 중
-                    <span className="ml-1 inline-flex w-6 animate-pulse">
-                      ...
+                  <div className="rounded-[14px] rounded-bl-[4px] border border-[#F0E0A8] bg-[#FFF6DC] px-[15px] py-[11px] transition-colors dark:border-[#5C4413]/40 dark:bg-[#2A2310]">
+                    <span className="inline-flex gap-1">
+                      <span className="size-1.5 animate-bounce rounded-full bg-[#C4A85A] [animation-delay:-0.3s]" />
+                      <span className="size-1.5 animate-bounce rounded-full bg-[#C4A85A] [animation-delay:-0.15s]" />
+                      <span className="size-1.5 animate-bounce rounded-full bg-[#C4A85A]" />
                     </span>
                   </div>
                 </div>
@@ -151,13 +149,13 @@ export function ChatPage() {
       <Sheet open={isHintOpen} onOpenChange={setIsHintOpen}>
         <SheetContent
           side="bottom"
-          className="max-h-[84dvh] rounded-t-lg bg-[#FAF8F5] p-0 dark:bg-[#171512]"
+          className="max-h-[84dvh] rounded-t-2xl bg-[#FFFCF3] p-0 dark:bg-[#16130A]"
         >
-          <SheetHeader className="border-b border-[#E7DDC8] bg-white p-4 pr-12 dark:border-white/10 dark:bg-[#201D19]">
-            <SheetTitle className="text-lg font-bold dark:text-white">
+          <SheetHeader className="border-b border-[#F0E0A8] bg-white p-4 pr-12 dark:border-[#5C4413]/40 dark:bg-[#221C0D]">
+            <SheetTitle className="text-lg font-bold text-[#3D2E0A] dark:text-[#F0E0C4]">
               힌트 패널
             </SheetTitle>
-            <SheetDescription className="dark:text-gray-400">
+            <SheetDescription className="text-[#8A6A28] dark:text-[#C4A85A]">
               막히는 지점에서 단서를 계속 요청하고, 알겠으면 완료하세요.
             </SheetDescription>
           </SheetHeader>
